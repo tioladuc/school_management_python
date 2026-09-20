@@ -1,1 +1,0 @@
-# Django discovers models from models.py; see infrastructure/orm/models.py.
