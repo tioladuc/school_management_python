@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Company</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f6f8;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+            margin: 80px auto;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #991b1b;
+            margin-bottom: 20px;
+        }
+
+        .warning {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .company-info {
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .company-row {
+            display: flex;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .company-row:last-child {
+            border-bottom: none;
+        }
+
+        .company-label {
+            width: 150px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .company-value {
+            flex: 1;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 5px;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-cancel {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-cancel:hover {
+            background-color: #d1d5db;
+        }
+
+        .btn-delete {
+            background-color: #dc2626;
+            color: #ffffff;
+        }
+
+        .btn-delete:hover {
+            background-color: #b91c1c;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Delete Company</h1>
+
+        <div class="warning">
+            <strong>Warning:</strong>
+            You are about to delete the following company.
+            This action cannot be undone.
+        </div>
+
+        <div class="company-info">
+
+            <div class="company-row">
+                <div class="company-label">Code</div>
+                <div class="company-value">
+                    {{ company.code }}
+                </div>
+            </div>
+
+            <div class="company-row">
+                <div class="company-label">Name</div>
+                <div class="company-value">
+                    {{ company.name }}
+                </div>
+            </div>
+
+            <div class="company-row">
+                <div class="company-label">Email</div>
+                <div class="company-value">
+                    {{ company.email }}
+                </div>
+            </div>
+
+            <div class="company-row">
+                <div class="company-label">Phone</div>
+                <div class="company-value">
+                    {{ company.phone }}
+                </div>
+            </div>
+
+            <div class="company-row">
+                <div class="company-label">Status</div>
+                <div class="company-value">
+                    {{ company.status }}
+                </div>
+            </div>
+
+        </div>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="actions">
+
+                <a
+                    href="{% url 'company-list' %}"
+                    class="btn btn-cancel">
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-delete">
+                    Delete Company
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

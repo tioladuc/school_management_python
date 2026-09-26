@@ -10,7 +10,7 @@ from ..company_service import get_company_service
 
 class CompanyListView(View):
 
-    template_name = "company_context/companies/company_list.html"
+    template_name = "company_context/company_list.html"
 
     def get(self, request):
         service = get_company_service()
@@ -28,7 +28,7 @@ class CompanyListView(View):
 
 class CompanyCreateView(View):
 
-    template_name = "company_context/companies/company_form.html"
+    template_name = "company_context/company_form.html"
 
     def get(self, request):
         form = CompanyForm()
@@ -90,7 +90,7 @@ class CompanyCreateView(View):
 
 class CompanyUpdateView(View):
 
-    template_name = "company_context/companies/company_form.html"
+    template_name = "company_context/company_form.html"
 
     def get(self, request, company_id):
 
@@ -174,7 +174,7 @@ class CompanyUpdateView(View):
 class CompanyDeleteView(View):
 
     template_name = (
-        "company_context/companies/company_confirm_delete.html"
+        "company_context/company_confirm_delete.html"
     )
 
     def get(self, request, company_id):
