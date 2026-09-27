@@ -24,11 +24,11 @@ class CompanyRepository:
         return CompanyModel.objects.filter(code=code.strip().upper()).exists()
 
     def search(self, search="", status=None):
-        # qs = CompanyModel.objects.all()
-        # if search:
-        #     qs = qs.filter(name__icontains=search) | qs.filter(code__icontains=search)
-        # if status:
-        #     qs = qs.filter(status=status)
+        qs = CompanyModel.objects.all()
+        if search:
+            qs = qs.filter(name__icontains=search) | qs.filter(code__icontains=search)
+        if status:
+            qs = qs.filter(status=status)
         sample_companies = [
             {
                 "id": "1",
@@ -91,5 +91,5 @@ class CompanyRepository:
                 "tenant_database": "tenant_comp006",
             },
         ]
-        # return [CompanyMapper.to_domain(x) for x in qs.order_by("name")]
-        return [CompanyMapper.to_domain(x) for x in sample_companies]
+        return [CompanyMapper.to_domain(x) for x in qs.order_by("name")]
+        # return [CompanyMapper.to_domain(x) for x in sample_companies]

@@ -7,15 +7,15 @@ class CompanyMapper:
     def to_domain(m):
         print(f"Mapping model to domain: {m}")
         return Company(
-            m["id"],
-            CompanyCode(m["code"]),
-            m["name"],
-            m["email"],
-            m["phone"],
-            m["address"],
-            m["status"],
-            None, # m["created_at"],
-            None, # m["updated_at"],
+            m.id, #m["id"],
+            CompanyCode(m.code),#CompanyCode(m["code"]),
+            m.name,#m["name"],
+            m.email,#m["email"],
+            m.phone,#m["phone"],
+            m.address,#m["address"],
+            m.status,#m["status"],
+            m.created_at, #None, # m["created_at"],
+            m.updated_at, #None, # m["updated_at"],
         )
 
     @staticmethod

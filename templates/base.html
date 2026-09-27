@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+      {% block title %}
+            Company Management
+        {% endblock %}
+    </title>
+    {% include 'components/top_css_js.html' %}
+    
+    {% block extra_css %}
+    {% endblock %}
+  </head>
+
+
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          {% block top_left_logo %}
+              {% include 'components/top_left_logo.html' %}
+          {% endblock %}
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">          
+          {% block left_menu %}
+              {% include 'components/left_menu.html' %}
+          {% endblock %}
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            {% block none_effect_top_logo %}
+                {% include 'components/none_effect_top_logo.html' %}
+            {% endblock %}  
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+          >
+            {% block top_horizontal_menu %}
+                {% include 'components/top_horizontal_menu.html' %}
+            {% endblock %}
+          </nav>
+          <!-- End Navbar -->
+        </div>
+
+        <div class="container">
+          {% block breadcrumb %}
+              {% include 'components/breadcrumb.html' %}
+          {% endblock %}          
+          {% block content %}
+              {% include 'components/content.html' %}
+          {% endblock %}
+        </div>
+
+        <footer class="footer">
+          {% block footer %}
+              {% include 'components/footer.html' %}
+          {% endblock %}          
+        </footer>
+      </div>
+
+      <!-- Custom template | don't include it in your project! -->
+      {% include 'components/custom_template_invisible.html' %}
+      <!-- End Custom template -->
+    </div>
+    {% include 'components/bottom_js.html' %}
+    {% block extra_js %}
+    {% endblock %}
+  </body>
+</html>
