@@ -1,0 +1,409 @@
+{% extends 'company_context/company_basenotlogin.html' %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block extra_css %}
+  <style>
+      
+      .login-container {
+        width: 100%;
+        max-width: 460px;
+        padding: 20px;
+      }
+      
+      .login-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 40px;
+      
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+      
+        animation: showCard 0.6s ease-out;
+      }
+      
+      /* Company */
+      
+      .company-section {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      
+      .company-icon {
+        width: 70px;
+        height: 70px;
+      
+        margin: 0 auto 15px;
+      
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      
+        border-radius: 50%;
+      
+        background: #eff6ff;
+        color: #2563eb;
+      
+        font-size: 32px;
+      }
+      
+      .company-name {
+        font-size: 24px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+      
+      .login-subtitle {
+        margin-top: 7px;
+        color: #64748b;
+        font-size: 14px;
+      }
+      
+      /* Form */
+      
+      .form-group {
+        margin-bottom: 20px;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 7px;
+      
+        font-size: 14px;
+        font-weight: 600;
+      
+        color: #334155;
+      }
+      
+      select,
+      input[type='text'],
+      input[type='password'] {
+        width: 100%;
+      
+        padding: 13px 14px;
+      
+        border: 1px solid #cbd5e1;
+        border-radius: 9px;
+      
+        background: #ffffff;
+      
+        font-size: 15px;
+        color: #1e293b;
+      
+        outline: none;
+      
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      
+      select:focus,
+      input:focus {
+        border-color: #2563eb;
+      
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      }
+      
+      /* Password */
+      
+      .password-container {
+        position: relative;
+      }
+      
+      .password-container input {
+        padding-right: 48px;
+      }
+      
+      .toggle-password {
+        position: absolute;
+      
+        right: 12px;
+        top: 50%;
+      
+        transform: translateY(-50%);
+      
+        border: none;
+        background: transparent;
+      
+        cursor: pointer;
+      
+        color: #64748b;
+      
+        font-size: 18px;
+      }
+      
+      .toggle-password:hover {
+        color: #2563eb;
+      }
+      
+      /* Forgot password */
+      
+      .forgot-password {
+        text-align: right;
+        margin-top: -8px;
+        margin-bottom: 25px;
+      }
+      
+      .forgot-password a {
+        color: #2563eb;
+        text-decoration: none;
+        font-size: 13px;
+      }
+      
+      .forgot-password a:hover {
+        text-decoration: underline;
+      }
+      
+      /* Login button */
+      
+      .login-button {
+        width: 100%;
+      
+        padding: 14px;
+      
+        border: none;
+        border-radius: 9px;
+      
+        background: #2563eb;
+        color: #ffffff;
+      
+        font-size: 16px;
+        font-weight: 600;
+      
+        cursor: pointer;
+      
+        transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      }
+      
+      .login-button:hover {
+        background: #1d4ed8;
+      
+        transform: translateY(-1px);
+      
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+      }
+      
+      .login-button:active {
+        transform: translateY(0);
+      }
+      
+      /* Create account */
+      
+      .create-account {
+        text-align: center;
+      
+        margin-top: 25px;
+        padding-top: 25px;
+      
+        border-top: 1px solid #e2e8f0;
+      
+        font-size: 14px;
+        color: #64748b;
+      }
+      
+      .create-account a {
+        color: #2563eb;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      
+      .create-account a:hover {
+        text-decoration: underline;
+      }
+      
+      /* Error */
+      
+      .error-message {
+        display: none;
+      
+        margin-bottom: 20px;
+        padding: 12px 14px;
+      
+        border-radius: 8px;
+      
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+      
+        color: #b91c1c;
+      
+        font-size: 14px;
+      }
+      
+      /* Loading */
+      
+      .loading {
+        display: none;
+        margin-left: 8px;
+      }
+      
+      /* Footer */
+      
+      .footer {
+        text-align: center;
+      
+        margin-top: 20px;
+      
+        color: #94a3b8;
+      
+        font-size: 12px;
+      }
+      
+      /* Animation */
+      
+      @keyframes showCard {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+      
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      /* Mobile */
+      
+      @media (max-width: 500px) {
+        .login-container {
+          padding: 15px;
+        }
+      
+        .login-card {
+          padding: 30px 25px;
+        }
+      
+        .company-name {
+          font-size: 21px;
+        }
+      }
+    </style>
+{% endblock %}
+
+{% block subtitle %}
+  Sign in to your account
+{% endblock %}
+
+{% block form %}
+  <form method="post" id="loginForm">
+    {% csrf_token %}
+
+    <!-- SCHOOL -->
+
+    <div class="form-group">
+      <label for="school">School</label>
+
+      <select id="school" name="school_id" required>
+        <option value="">-- Select a school --</option>
+        {% block select_schools %}
+          {% for school in schools %}
+            <option value="{{ school.value }}">{{ school.label }}</option>
+          {% empty %}
+            <option value="">No school available</option>
+          {% endfor %}
+        {% endblock %}
+      </select>
+    </div>
+
+    <!-- PROFILE -->
+
+    <div class="form-group">
+      <label for="profile">Profile</label>
+
+      <select id="profile" name="profile" required>
+        <option value="">-- Select your profile --</option>
+        {% block select_profiles %}
+          {% for profile in profiles %}
+            <option value="{{ profile.value }}">{{ profile.label }}</option>
+          {% empty %}
+            <option value="">No profile available</option>
+          {% endfor %}
+        {% endblock %}
+      </select>
+    </div>
+
+    <!-- LOGIN -->
+
+    <div class="form-group">
+      <label for="username">
+        {% block login_label %}
+          Login
+        {% endblock %}
+      </label>
+
+      <input type="text" id="username" name="username" placeholder="Enter your login" autocomplete="username" required />
+    </div>
+
+    <!-- PASSWORD -->
+
+    <div class="form-group">
+      <label for="password">Password</label>
+
+      <div class="password-container">
+        <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" required />
+
+        <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password">👁</button>
+      </div>
+    </div>
+
+    <!-- FORGOT PASSWORD -->
+
+    <div class="forgot-password">
+      <a href="{% url 'password-reset' %}">Forgot your password?</a>
+    </div>
+
+    <!-- LOGIN -->
+
+    <button type="submit" class="login-button" id="loginButton">
+      Sign In
+
+      <span class="loading" id="loading">⏳</span>
+    </button>
+  </form>
+{% endblock %}
+
+{% block bottom_link %}
+  <div class="create-account">
+    Don't have an account?
+
+    <a href="{% url 'create-account' %}">Create a new account</a>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    /*
+     * Show / hide password
+     */
+    
+    const togglePassword = document.getElementById('togglePassword')
+    
+    const password = document.getElementById('password')
+    
+    togglePassword.addEventListener('click', function () {
+      if (password.type === 'password') {
+        password.type = 'text'
+    
+        this.textContent = '🙈'
+      } else {
+        password.type = 'password'
+    
+        this.textContent = '👁'
+      }
+    })
+    
+    /*
+     * Login loading indicator
+     */
+    
+    const loginForm = document.getElementById('loginForm')
+    
+    const loginButton = document.getElementById('loginButton')
+    
+    const loading = document.getElementById('loading')
+    
+    loginForm.addEventListener('submit', function () {
+      loginButton.disabled = true
+      loading.style.display = 'inline-block'
+    })
+  </script>
+{% endblock %}

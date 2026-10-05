@@ -42,7 +42,27 @@ class CompanyApplicationService:
 
     def search(self, query):
         return [self.to_dto(c) for c in self.companies.search(query.search, query.status)]
+    
+    def getProfiles(self):
+        return [
+            {'value': 'SUPER_ADMINISTRATOR', 'label': 'Super Administrator'},
+            {'value': 'ADMINISTRATOR', 'label': 'Administrator'},
+            {'value': 'ADMINISTRATION', 'label': 'Administration'},
+            {'value': 'STUDENT', 'label': 'Student'},
+            {'value': 'PARENT', 'label': 'Parent'},
+            {'value': 'TEACHER', 'label': 'Teacher'},
+            {'value': 'ACCOUNTANT', 'label': 'Accountant'}
+        ]
 
+    def getSchools(self):
+        return [
+            {"value": "SCH_FDL_001", "label": "Collège François-de-Laval"},
+            {"value": "SCH_STP_002", "label": "St-Patrick's High School"},
+            {"value": "SCH_URS_003", "label": "École des Ursulines de Québec"},
+            {"value": "SCH_STR_004", "label": "École Secondaire Saint-Roch"},
+            {"value": "SCH_GAR_005", "label": "Collège Garneau"}
+        ]
+    
     @staticmethod
     def to_dto(c):
         return CompanyDto(c.id, c.code.value, c.name, c.email, c.phone, c.address, c.status)

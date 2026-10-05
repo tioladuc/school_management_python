@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <style>
+        * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        min-height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+      
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      
+        background: radial-gradient(circle at top left, #334155, transparent 40%), radial-gradient(circle at bottom right, #1d4ed8, transparent 40%), #0f172a;
+      
+        color: #1e293b;
+      }
+    </style>
+    {% block extra_css %}
+      
+    {% endblock %}
+  </head>
+
+  <body>
+    <div class="login-container">
+      <div class="login-card">
+        <!-- COMPANY -->
+
+        {% block companySection %}
+        <div class="company-section">
+          <div class="company-icon">🏫</div>
+
+          <div class="company-name">{{ company.name }} duc;air</div>
+
+          <div class="login-subtitle">{% block subtitle %}{% endblock %}</div>
+        </div>        
+        {% endblock %}
+
+        <!-- ERROR -->
+
+        {% if error %}
+          <div class="error-message" style="display:block;">{{ error }}</div>
+        {% endif %}
+
+        <!-- LOGIN FORM -->
+
+        {% block form %}
+        
+        {% endblock %}
+        <!-- CREATE ACCOUNT -->
+
+        {% block bottom_link %}
+        
+        {% endblock %}
+      </div>
+
+      <div class="footer">© {{ current_year }} School Management System</div>
+    </div>
+
+    {% block extra_js %}
+    {% endblock %}
+    <script>
+      /*
+       * Show / hide password
+       */
+      
+      const togglePassword = document.getElementById('togglePassword')
+      
+      const password = document.getElementById('password')
+      
+      togglePassword.addEventListener('click', function () {
+        if (password.type === 'password') {
+          password.type = 'text'
+      
+          this.textContent = '🙈'
+        } else {
+          password.type = 'password'
+      
+          this.textContent = '👁'
+        }
+      })
+      
+      /*
+       * Login loading indicator
+       */
+      
+      const loginForm = document.getElementById('loginForm')
+      
+      const loginButton = document.getElementById('loginButton')
+      
+      const loading = document.getElementById('loading')
+      
+      loginForm.addEventListener('submit', function () {
+        loginButton.disabled = true
+      
+        loading.style.display = 'inline'
+      })
+    </script>
+  </body>
+</html>

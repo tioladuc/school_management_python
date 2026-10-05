@@ -7,6 +7,107 @@ from apps.company_context.application.queries.search_company import SearchCompan
 from ..forms.company_form import CompanyForm
 from ..company_service import get_company_service
 
+#############################################
+from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
+from apps.company_context.infrastructure.orm.models import CompanyModel
+from django.utils.decorators import method_decorator
+
+
+class CompanyErrorView(View):
+
+    template_name = "company_context/company_error.html"
+
+    def get(self, request):
+
+        return render(
+            request,
+            self.template_name,
+            {},
+        )
+
+
+class CompanyLoginView(View):
+
+    template_name = "company_context/company_login.html"
+
+    def get(self, request):
+        service = get_company_service()
+        return render(
+            request,
+            self.template_name,
+            {
+                "schools": service.getSchools(),
+                "profiles": service.getProfiles(),
+            },
+        )
+
+    def post(self, request):
+        service = get_company_service()
+        return render(
+            request,
+            self.template_name,
+            {
+                "schools": service.getSchools(),
+                "profiles": service.getProfiles(),
+            },
+        )
+
+
+class CompanyPasswordResetView(View):
+
+    template_name = "company_context/company_passwordreset.html"
+
+    def get(self, request):
+        service = get_company_service()
+        return render(
+            request,
+            self.template_name,
+            {
+                "schools": service.getSchools(),
+                "profiles": service.getProfiles(),
+            },
+        )
+
+    def post(self, request):
+        service = get_company_service()
+        return render(
+            request,
+            self.template_name,
+            {
+                "schools": service.getSchools(),
+                "profiles": service.getProfiles(),
+            },
+        )
+
+
+class CompanyCreateAccountView(View):
+
+    template_name = "company_context/company_newaccount.html"
+
+    def get(self, request):
+        service = get_company_service()
+        print(service.getProfiles())
+        return render(
+            request,
+            self.template_name,
+            {
+                "schools": service.getSchools(),
+                "profiles": service.getProfiles(),
+            },
+        )
+
+    def post(self, request):
+        service = get_company_service()
+        return render(
+            request,
+            self.template_name,
+            {
+                "schools": service.getSchools(),
+                "profiles": service.getProfiles(),
+            },
+        )
+
 
 class CompanyListView(View):
 
@@ -173,9 +274,7 @@ class CompanyUpdateView(View):
 
 class CompanyDeleteView(View):
 
-    template_name = (
-        "company_context/company_confirm_delete.html"
-    )
+    template_name = "company_context/company_confirm_delete.html"
 
     def get(self, request, company_id):
 
@@ -213,3 +312,26 @@ class CompanyDeleteView(View):
             )
 
         return redirect("company-list")
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class CompanyEntryView(View):
+
+    def post(self, request):
+
+        company_code = request.POST.get("company_code")
+
+        if not company_code:
+            return redirect("error-page")
+
+        company = CompanyModel.objects.filter(code=company_code).first()
+
+        if not company:
+            return redirect("error-page")
+
+        request.session["company_code"] = company_code
+
+        return redirect("login")
+
+    def get(self, request):
+        return redirect("error-page")
