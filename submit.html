@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Company Code</title>
+</head>
+<body>
+
+    <h2>Submit Company Data</h2>
+    
+    <!-- The form sends a POST request to localhost:8000 -->
+    <form action="http://localhost:8000" method="POST">
+        
+        <!-- Hidden input field with the name 'company_code' and value 'xxx' -->
+        <input type="hidden" name="company_code" value="COMP001">
+        
+        <!-- Submit button to trigger the POST request -->
+        <button type="submit">Submit</button>
+        
+    </form>
+
+</body>
+</html>

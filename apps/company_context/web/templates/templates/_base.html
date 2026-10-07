@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+      {% block title %}
+        Company Management
+      {% endblock %}
+    </title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f6f8;
+        color: #333;
+      }
+      
+      .navbar {
+        background-color: #1f2937;
+        color: white;
+        padding: 15px 30px;
+      }
+      
+      .navbar-container {
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .navbar-brand {
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      
+      .navbar-links {
+        display: flex;
+        gap: 20px;
+      }
+      
+      .navbar-links a {
+        color: white;
+        text-decoration: none;
+      }
+      
+      .navbar-links a:hover {
+        text-decoration: underline;
+      }
+      
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+      }
+      
+      .card {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      
+      .btn {
+        display: inline-block;
+        padding: 10px 16px;
+        border-radius: 5px;
+        border: none;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      
+      .btn-primary {
+        background-color: #2563eb;
+        color: white;
+      }
+      
+      .btn-danger {
+        background-color: #dc2626;
+        color: white;
+      }
+      
+      .btn-secondary {
+        background-color: #6b7280;
+        color: white;
+      }
+    </style>
+
+    {% block extra_css %}
+
+    {% endblock %}
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <a href="{% url 'company-list' %}" class="navbar-brand">Company Management</a>
+
+        <div class="navbar-links">
+          <a href="{% url 'company-list' %}">Companies</a>
+
+          <a href="{% url 'company-create' %}">New Company</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      {% block content %}
+
+      {% endblock %}
+    </main>
+
+    {% block extra_js %}
+
+    {% endblock %}
+  </body>
+</html>

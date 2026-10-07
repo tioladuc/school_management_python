@@ -1,6 +1,7 @@
 from django.urls import path
 
 from apps.company_context.web import views
+from apps.company_context.web.utilities.url_route_name import UrlRouteName
 from .views.company_views import (
     CompanyErrorView,
     CompanyListView,
@@ -15,51 +16,48 @@ from .views.company_views import (
 
 urlpatterns = [
     path(
-        "error-page/",
+        UrlRouteName.ERROR_PAGE,
         CompanyErrorView.as_view(),
-        name="error-page"
-        ),
+        name=UrlRouteName.ERROR_NAME,
+    ),
     path(
-        "company-entry/",
+        UrlRouteName.COMPANY_ENTRY_PAGE,
         CompanyEntryView.as_view(),
-        name="company-entry"
+        name=UrlRouteName.COMPANY_ENTRY_NAME,
     ),
     path(
-        "login/",
+        UrlRouteName.LOGIN_PAGE,
         CompanyLoginView.as_view(),
-        name="login"
-        ),
+        name=UrlRouteName.LOGIN_NAME,
+    ),
     path(
-            "password-reset/",
-            CompanyPasswordResetView.as_view(),
-            name="password-reset"
-            ),
+        UrlRouteName.PASSWORD_RESET_PAGE,
+        CompanyPasswordResetView.as_view(),
+        name=UrlRouteName.PASSWORD_RESET_NAME,
+    ),
     path(
-                "create-account/",
-                CompanyCreateAccountView.as_view(),
-                name="create-account"
-                ),
+        UrlRouteName.CREATE_ACCOUNT_PAGE,
+        CompanyCreateAccountView.as_view(),
+        name=UrlRouteName.CREATE_ACCOUNT_NAME,
+    ),
     path(
-        "companies/",
+        UrlRouteName.COMPANIES_LIST_PAGE,
         CompanyListView.as_view(),
-        name="company-list",
+        name=UrlRouteName.COMPANIES_LIST_NAME,
     ),
-
     path(
-        "companies/create/",
+        UrlRouteName.COMPANY_CREATE_PAGE,
         CompanyCreateView.as_view(),
-        name="company-create",
+        name=UrlRouteName.COMPANY_CREATE_NAME,
     ),
-
     path(
-        "companies/<int:company_id>/edit/",
+        UrlRouteName.COMPANY_UPDATE_PAGE,
         CompanyUpdateView.as_view(),
-        name="company-update",
+        name=UrlRouteName.COMPANY_UPDATE_NAME,
     ),
-
     path(
-        "companies/<int:company_id>/delete/",
+        UrlRouteName.COMPANY_DELETE_PAGE,
         CompanyDeleteView.as_view(),
-        name="company-delete",
+        name=UrlRouteName.COMPANY_DELETE_NAME,
     ),
 ]

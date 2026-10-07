@@ -1,13 +1,16 @@
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
+from apps.company_context.application.dto.user_in_dto import UserInDto
 from apps.company_context.application.queries.search_company import SearchCompanyQuery
+from apps.company_context.application.queries.get_company import GetCompanyQuery
+from apps.company_context.web.utilities.url_route_name import UrlRouteName
 
 from ..forms.company_form import CompanyForm
 from ..company_service import get_company_service
 
-#############################################
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from apps.company_context.infrastructure.orm.models import CompanyModel
@@ -19,23 +22,31 @@ class CompanyErrorView(View):
     template_name = "company_context/company_error.html"
 
     def get(self, request):
-
+        print('CompanyErrorView.get()')
+        
+        return render(
+            request,
+            self.template_name,
+            {},
+        )
+    def post(self, request):
+        print('CompanyErrorView.post()')
         return render(
             request,
             self.template_name,
             {},
         )
 
-
 class CompanyLoginView(View):
 
-    template_name = "company_context/company_login.html"
+    template_name_login = "company_context/company_login.html"
+    template_name_home = "company_context/company_dashboard.html"
 
     def get(self, request):
         service = get_company_service()
         return render(
             request,
-            self.template_name,
+            self.template_name_login,
             {
                 "schools": service.getSchools(),
                 "profiles": service.getProfiles(),
@@ -43,15 +54,43 @@ class CompanyLoginView(View):
         )
 
     def post(self, request):
+        # 1. Read data coming from the HTML form
+        school_id = request.POST.get("school_id")
+        profile = request.POST.get("profile")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        # 2. Get application service
         service = get_company_service()
-        return render(
-            request,
-            self.template_name,
-            {
-                "schools": service.getSchools(),
-                "profiles": service.getProfiles(),
-            },
+
+        # 3. Send the data to the application layer
+        userInDto = UserInDto(
+            company_code=request.session.get("company_code"),
+            school_id=school_id,
+            profile=profile,
+            username=username,
+            password=password,
         )
+        result = service.login(userInDto)
+
+        # 4. Handle the result
+        if not result.success:
+            return render(
+                request,
+                self.template_name_login,
+                {
+                    "schools": service.getSchools(),
+                    "profiles": service.getProfiles(),
+                    "error": result.message,
+                },
+            )
+
+        # 5. Login successful
+        request.session["school_id"] = school_id
+        request.session["profile"] = profile
+        request.session["user_data"] = result.user_data
+
+        return redirect(self.template_name_home)
 
 
 class CompanyPasswordResetView(View):
@@ -99,6 +138,7 @@ class CompanyCreateAccountView(View):
 
     def post(self, request):
         service = get_company_service()
+        print(request.POST)
         return render(
             request,
             self.template_name,
@@ -174,7 +214,7 @@ class CompanyCreateView(View):
                 "Company created successfully.",
             )
 
-            return redirect("company-list")
+            return redirect(UrlRouteName.COMPANIES_LIST_NAME)
 
         except Exception as exc:
             form.add_error(None, str(exc))
@@ -196,11 +236,11 @@ class CompanyUpdateView(View):
     def get(self, request, company_id):
 
         service = get_company_service()
-
-        company = service.get_company(company_id)
+        
+        company = service.get(GetCompanyQuery(company_id=company_id))
 
         if company is None:
-            return redirect("company-list")
+            return redirect(UrlRouteName.COMPANIES_LIST_NAME)
 
         form = CompanyForm(
             initial={
@@ -210,7 +250,7 @@ class CompanyUpdateView(View):
                 "phone": company.phone,
                 "address": company.address,
                 "status": company.status,
-                "tenant_database": company.tenant_database,
+                # "tenant_database": company.tenant_database,
             }
         )
 
@@ -257,7 +297,7 @@ class CompanyUpdateView(View):
                 "Company updated successfully.",
             )
 
-            return redirect("company-list")
+            return redirect(UrlRouteName.COMPANIES_LIST_NAME)
 
         except Exception as exc:
             form.add_error(None, str(exc))
@@ -283,7 +323,7 @@ class CompanyDeleteView(View):
         company = service.get_company(company_id)
 
         if company is None:
-            return redirect("company-list")
+            return redirect(UrlRouteName.COMPANIES_LIST_NAME)
 
         return render(
             request,
@@ -311,7 +351,7 @@ class CompanyDeleteView(View):
                 str(exc),
             )
 
-        return redirect("company-list")
+        return redirect(UrlRouteName.COMPANIES_LIST_NAME)
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -322,16 +362,16 @@ class CompanyEntryView(View):
         company_code = request.POST.get("company_code")
 
         if not company_code:
-            return redirect("error-page")
+            return redirect(UrlRouteName.ERROR_NAME)
 
         company = CompanyModel.objects.filter(code=company_code).first()
 
         if not company:
-            return redirect("error-page")
+            return redirect(UrlRouteName.ERROR_NAME)
 
         request.session["company_code"] = company_code
 
-        return redirect("login")
+        return redirect(UrlRouteName.LOGIN_NAME)
 
     def get(self, request):
-        return redirect("error-page")
+        return redirect(UrlRouteName.ERROR_NAME)

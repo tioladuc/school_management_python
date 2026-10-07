@@ -62,6 +62,16 @@ class CompanyApplicationService:
             {"value": "SCH_STR_004", "label": "École Secondaire Saint-Roch"},
             {"value": "SCH_GAR_005", "label": "Collège Garneau"}
         ]
+
+    def login(self, userInDto):
+        company = self.companies.get_by_code(userInDto.company_code)
+        if company is None:
+            return {"success": False, "message": "Company not found."}
+        if company.status != "ACTIVE":
+            return {"success": False, "message": "Company is not active."}
+        # Here you would typically check the user's credentials against a user repository
+        # For this example, we'll assume the login is successful if the company is active
+        return {"success": True, "message": "Login successful.", "user_data": None}
     
     @staticmethod
     def to_dto(c):

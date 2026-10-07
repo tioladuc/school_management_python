@@ -4,10 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>{% block title %}{% endblock %}</title>
+    <title>
+      {% block title %}
+
+      {% endblock %}
+    </title>
 
     <style>
-        * {
+      * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -25,9 +29,18 @@
       
         color: #1e293b;
       }
+      .error-message {
+        display: none;
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #fee2e2;
+        color: #b91c1c;
+        font-size: 14px;
+      }
     </style>
     {% block extra_css %}
-      
+
     {% endblock %}
   </head>
 
@@ -37,13 +50,17 @@
         <!-- COMPANY -->
 
         {% block companySection %}
-        <div class="company-section">
-          <div class="company-icon">🏫</div>
+          <div class="company-section">
+            <div class="company-icon">🏫</div>
 
-          <div class="company-name">{{ company.name }} duc;air</div>
+            <div class="company-name">{{ company.name }}</div>
 
-          <div class="login-subtitle">{% block subtitle %}{% endblock %}</div>
-        </div>        
+            <div class="login-subtitle">
+              {% block subtitle %}
+
+              {% endblock %}
+            </div>
+          </div>
         {% endblock %}
 
         <!-- ERROR -->
@@ -55,12 +72,12 @@
         <!-- LOGIN FORM -->
 
         {% block form %}
-        
+
         {% endblock %}
         <!-- CREATE ACCOUNT -->
 
         {% block bottom_link %}
-        
+
         {% endblock %}
       </div>
 
@@ -68,6 +85,7 @@
     </div>
 
     {% block extra_js %}
+
     {% endblock %}
     <script>
       /*

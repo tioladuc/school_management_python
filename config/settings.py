@@ -59,10 +59,12 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
-    'middleware.company_middleware.CompanyMiddleware',
+    'apps.company_context.web.middleware.company_middleware.CompanyMiddleware',
 
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+     
     
     
 ]
@@ -73,13 +75,20 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates', BASE_DIR / 'apps' / 'company_context' / 'web' / 'templates'],
+        'DIRS': [
+                    BASE_DIR / 'templates', 
+                    BASE_DIR / 'apps' / 'company_context' / 'web' / 'templates', 
+                    BASE_DIR / 'apps' / 'company_context' / 'web' / 'templates' / 'company_context',
+                    BASE_DIR / 'apps' / 'company_context' / 'web' / 'templates' / 'templates',
+                ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'apps.company_context.web.utilities.context_processors.url_routes',
             ],
         },
     },
