@@ -14,6 +14,7 @@ class CompanyMapper:
             m.phone,#m["phone"],
             m.address,#m["address"],
             m.status,#m["status"],
+            m.tenant_database,
             m.created_at, #None, # m["created_at"],
             m.updated_at, #None, # m["updated_at"],
         )
@@ -26,4 +27,5 @@ class CompanyMapper:
         m.phone = e.phone
         m.address = e.address
         m.status = e.status
+        m.tenant_database = e.tenant_database
         return m

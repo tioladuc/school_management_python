@@ -12,6 +12,7 @@ class Company:
     phone: str = ''
     address: str = ''
     status: str = 'ACTIVE'
+    tenant_database: str = ''
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 

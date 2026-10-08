@@ -39,7 +39,7 @@ class CompanyMiddleware:
 
         print('duclair 01')
         # Authenticated user
-        if True: # request.user.is_authenticated:
+        if True: #request.user.is_authenticated:
             return self.get_response(request)
 
         print('duclair 02')

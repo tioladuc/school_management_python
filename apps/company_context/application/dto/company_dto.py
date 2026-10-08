@@ -9,4 +9,5 @@ class CompanyDto:
     phone: str
     address: str
     status: str
+    tenant_database: str
     school_count: int = 0

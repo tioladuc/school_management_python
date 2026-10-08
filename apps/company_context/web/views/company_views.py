@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
+from apps.company_context.application.commands.create_company import CreateCompanyCommand
+from apps.company_context.application.commands.update_company import UpdateCompanyCommand
 from apps.company_context.application.dto.user_in_dto import UserInDto
 from apps.company_context.application.queries.search_company import SearchCompanyQuery
 from apps.company_context.application.queries.get_company import GetCompanyQuery
@@ -199,14 +201,14 @@ class CompanyCreateView(View):
         service = get_company_service()
 
         try:
-            service.create_company(
+            service.create(CreateCompanyCommand(
                 code=form.cleaned_data["code"],
                 name=form.cleaned_data["name"],
                 email=form.cleaned_data["email"],
                 phone=form.cleaned_data["phone"],
                 address=form.cleaned_data["address"],
-                status=form.cleaned_data["status"],
-                tenant_database=form.cleaned_data["tenant_database"],
+                #status=form.cleaned_data["status"],
+                tenant_database=form.cleaned_data["tenant_database"],)
             )
 
             messages.success(
@@ -281,15 +283,16 @@ class CompanyUpdateView(View):
         service = get_company_service()
 
         try:
-            service.update_company(
+            
+            service.update(UpdateCompanyCommand(
                 company_id=company_id,
-                code=form.cleaned_data["code"],
+                #code=form.cleaned_data["code"],
                 name=form.cleaned_data["name"],
                 email=form.cleaned_data["email"],
                 phone=form.cleaned_data["phone"],
                 address=form.cleaned_data["address"],
-                status=form.cleaned_data["status"],
-                tenant_database=form.cleaned_data["tenant_database"],
+                #status=form.cleaned_data["status"],
+                tenant_database=form.cleaned_data["tenant_database"],)
             )
 
             messages.success(

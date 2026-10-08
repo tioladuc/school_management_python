@@ -75,4 +75,4 @@ class CompanyApplicationService:
     
     @staticmethod
     def to_dto(c):
-        return CompanyDto(c.id, c.code.value, c.name, c.email, c.phone, c.address, c.status)
+        return CompanyDto(c.id, c.code.value, c.name, c.email, c.phone, c.address, c.status, c.tenant_database)
