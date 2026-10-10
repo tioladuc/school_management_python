@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 @dataclass
 class School:
     id: int | None
-    company_id: int
     code: str
     name: str
     city: str

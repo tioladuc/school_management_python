@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 @dataclass
 class Staff:
     id: int | None
-    company_id: int
     staff_number: str
     first_name: str
     last_name: str

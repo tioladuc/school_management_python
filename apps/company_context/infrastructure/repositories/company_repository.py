@@ -1,8 +1,30 @@
 from ..orm.models import CompanyModel
 from ..mappers.company_mapper import CompanyMapper
+from apps.company_context.infrastructure.utilities.initialize_company import (
+    drop_database,
+    preparer_company_database,
+    preparer_data_for_school,
+    preparer_data_for_school_from_another_school,
+    preparer_tables_for_school,
+    backup_company_database,
+)
 
 
 class CompanyRepository:
+    def create_database(self, company_id):
+            try:
+                obj = CompanyModel.objects.get(pk=company_id)
+                obj.tenant_database
+            except CompanyModel.DoesNotExist:
+                return None
+
+    def drop_database(self, company_id):
+            try:
+                obj = CompanyModel.objects.get(pk=company_id)
+            except CompanyModel.DoesNotExist:
+                return None
+
+            
     def get(self, company_id):
         try:
             return CompanyMapper.to_domain(CompanyModel.objects.get(pk=company_id))
@@ -93,3 +115,60 @@ class CompanyRepository:
         ]
         return [CompanyMapper.to_domain(x) for x in qs.order_by("name")]
         # return [CompanyMapper.to_domain(x) for x in sample_companies]
+
+
+
+
+
+    ##OK
+    def initialize_company_bd(self, company_id):
+        try:
+            obj = CompanyModel.objects.get(pk=company_id)
+            preparer_company_database(obj.tenant_database)
+            return True
+        except CompanyModel.DoesNotExist:
+            return False
+
+    ##OK
+    def create_school_from_scratch(self, company_id):
+        try:
+            obj = CompanyModel.objects.get(pk=company_id)
+            preparer_data_for_school(obj.tenant_database)
+            return True
+        except CompanyModel.DoesNotExist:
+            return False
+    ##OK
+    def preparer_tables_for_school(self, company_id):
+        try:
+            obj = CompanyModel.objects.get(pk=company_id)
+            preparer_tables_for_school(obj.tenant_database)
+            return True
+        except CompanyModel.DoesNotExist:
+            return False
+
+    ##OK
+    def drop_database(self, company_id):
+        try:
+            obj = CompanyModel.objects.get(pk=company_id)
+            drop_database(obj.tenant_database)
+            return True
+        except CompanyModel.DoesNotExist:
+            return False
+
+    ##OK
+    def backup_company_database(self, company_id):
+        try:
+            obj = CompanyModel.objects.get(pk=company_id)
+            backup_company_database(obj.tenant_database)
+            return True
+        except CompanyModel.DoesNotExist:
+            return False
+
+    ##OK
+    def create_school_from_school(self, company_id, school_code):
+        try:
+            obj = CompanyModel.objects.get(pk=company_id)
+            preparer_data_for_school_from_another_school(obj.tenant_database, school_code)
+            return True
+        except CompanyModel.DoesNotExist:
+            return False

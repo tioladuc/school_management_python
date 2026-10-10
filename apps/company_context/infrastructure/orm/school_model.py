@@ -3,7 +3,7 @@ from .company_model import CompanyModel
 
 class SchoolModel(models.Model):
     STATUS_CHOICES=[('ACTIVE','Active'),('SUSPENDED','Suspended'),('TERMINATED','Terminated')]
-    company=models.ForeignKey(CompanyModel,on_delete=models.PROTECT,related_name='schools')
+    #company=models.ForeignKey(CompanyModel,on_delete=models.PROTECT,related_name='schools')
     code=models.CharField(max_length=50)
     name=models.CharField(max_length=250)
     city=models.CharField(max_length=150)
@@ -13,7 +13,7 @@ class SchoolModel(models.Model):
     updated_at=models.DateTimeField(auto_now=True)
     class Meta:
         db_table='school'
-        constraints=[models.UniqueConstraint(fields=['company','code'],name='uq_school_company_code')]
+        constraints=[models.UniqueConstraint(fields=['code'],name='uq_school_code')]
 
 __all__ = [
     "SchoolModel",

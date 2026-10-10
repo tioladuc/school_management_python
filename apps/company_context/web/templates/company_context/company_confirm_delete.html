@@ -147,13 +147,18 @@
             <div class="company-label">Status</div>
             <div class="company-value">{{ company.status }}</div>
           </div>
+
+          <div class="company-row">
+            <div class="company-label">Tenant Database</div>
+            <div class="company-value">{{ company.tenant_database }}</div>
+          </div>
         </div>
 
         <form method="post">
           {% csrf_token %}
 
           <div class="actions">
-            <a href="{% url UrlRouteName.COMPANY_LIST_NAME %}" class="btn btn-cancel">Cancel</a>
+            <a href="{% url UrlRouteName.COMPANIES_LIST_NAME %}" class="btn btn-cancel">Cancel</a>
 
             <button type="submit" class="btn btn-delete">Delete Company</button>
           </div>

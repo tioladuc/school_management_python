@@ -252,7 +252,7 @@ class CompanyUpdateView(View):
                 "phone": company.phone,
                 "address": company.address,
                 "status": company.status,
-                # "tenant_database": company.tenant_database,
+                "tenant_database": company.tenant_database,
             }
         )
 
@@ -322,8 +322,13 @@ class CompanyDeleteView(View):
     def get(self, request, company_id):
 
         service = get_company_service()
+        service.initialize_company_bd(company_id)
+        
+        # print('before company creation bd+++')
+        # service.create_school_from_scratch(company_id)
+        # print('after company creation bd++++')
 
-        company = service.get_company(company_id)
+        company = service.get(GetCompanyQuery(company_id=company_id))
 
         if company is None:
             return redirect(UrlRouteName.COMPANIES_LIST_NAME)

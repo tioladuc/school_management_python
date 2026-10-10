@@ -22,7 +22,7 @@ class CompanyApplicationService:
         company = self.companies.get(command.company_id)
         if company is None: raise NotFoundError('Company not found.')
         CompanyDomainService.ensure_active(company)
-        company.name, company.email, company.phone, company.address = command.name.strip(), command.email.strip(), command.phone.strip(), command.address.strip()
+        company.name, company.email, company.phone, company.address, company.tenant_database = command.name.strip(), command.email.strip(), command.phone.strip(), command.address.strip(), command.tenant_database.strip()
         return self.to_dto(self.companies.save(company))
 
     def activate(self, command):
@@ -72,6 +72,53 @@ class CompanyApplicationService:
         # Here you would typically check the user's credentials against a user repository
         # For this example, we'll assume the login is successful if the company is active
         return {"success": True, "message": "Login successful.", "user_data": None}
+
+
+    # For company database initialization and school creation
+    def initialize_company_bd(self, company_id):
+        try:
+            self.companies.initialize_company_bd(company_id)
+            return True
+        except :
+            return False
+    
+    def create_school_from_scratch(self, company_id):
+        try:
+            self.companies.create_school_from_scratch(company_id)
+            return True
+        except :
+            return False
+    
+    def create_school_from_school(self, company_id, school_code):
+        try:
+            self.companies.create_school_from_school(company_id, school_code)
+            return True
+        except :
+            return False 
+
+    def preparer_tables_for_school(self, company_id):
+            try:
+                self.companies.preparer_tables_for_school(company_id)
+                return True
+            except :
+                return False 
+
+    def drop_database(self, company_id):
+        try:
+            self.companies.drop_database(company_id)
+            return True
+        except :
+            return False 
+
+    def backup_company_database(self, company_id):
+        try:
+            self.companies.backup_company_database(company_id)
+            return True
+        except :
+            return False 
+
+
+
     
     @staticmethod
     def to_dto(c):
