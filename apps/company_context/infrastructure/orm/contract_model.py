@@ -9,11 +9,13 @@ class ContractModel(models.Model):
     school_setup_price=models.DecimalField(max_digits=14,decimal_places=2)
     academic_year_renewal_price=models.DecimalField(max_digits=14,decimal_places=2)
     start_date=models.DateField()
-    end_date=models.DateField()
-    status=models.CharField(max_length=20,choices=STATUS_CHOICES,default='DRAFT')
+    end_date=models.DateField()    
     currency=models.CharField(max_length=3,default='CAD')
+
+    status=models.CharField(max_length=20,choices=STATUS_CHOICES,default='DRAFT')
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
     class Meta: db_table='contract'
 
 __all__ = [
