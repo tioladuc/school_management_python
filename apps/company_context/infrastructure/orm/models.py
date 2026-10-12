@@ -53,6 +53,16 @@ from .book_category_model import BookCategoryModel
 from .book_model import BookModel
 from .booking_model import BookingModel
 
+from .fee_category_model import FeeCategoryModel
+from .fee_library_model import FeeLibraryModel
+from .fee_online_course_model import FeeOnlineCourseModel
+from .fee_library_payment_model import FeeLibraryPaymentModel
+from .fee_online_course_payment_model import FeeOnlineCoursePaymentModel
+from .online_course_model import OnlineCourseModel
+from .online_course_assessment_model import OnlineCourseAssessmentModel
+from .online_course_reading_model import OnlineCourseReadingModel
+from .online_course_assessment_answer_model import OnlineCourseAssessmentAnswerModel
+
 __all__ = [
     "CompanyModel",
     "SchoolModel",
@@ -107,5 +117,15 @@ __all__ = [
     "BookCategoryModel",
     "BookModel",
     "BookingModel",
+
+    "FeeCategoryModel",
+    "FeeLibraryModel",
+    "FeeOnlineCourseModel",
+    "FeeLibraryPaymentModel",
+    "FeeOnlineCoursePaymentModel",
+    "OnlineCourseModel",
+    "OnlineCourseAssessmentModel",
+    "OnlineCourseReadingModel",
+    "OnlineCourseAssessmentAnswerModel",
 
 ]
