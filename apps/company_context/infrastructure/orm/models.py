@@ -36,6 +36,23 @@ from .discipline_term_model import DisciplineTermModel
 from .discipline_sequence_model import DisciplineSequenceModel
 from .discipline_assessment_model import DisciplineAssessmentModel
 
+from .finance_category_model import FinanceCategoryModel
+from .finance_subcategory_model import FinanceSubCategoryModel
+from .finance_item_model import FinanceItemModel
+from .finance_entry_model import FinanceEntryModel
+from .pay_category_model import PayCategoryModel
+from .pay_recursive_item_model import PayRecursiveItem
+from .pay_static_item_model import PayStaticItem
+from .pay_recursive_item_data_model import PayRecursiveItemData
+from .pay_static_item_data_model import PayStaticItemData
+
+from .class_roll_model import ClassRollModel
+from .student_message_model import StudentMessageModel
+from .student_move_scan_model import StudentMoveScanModel
+from .book_category_model import BookCategoryModel
+from .book_model import BookModel
+from .booking_model import BookingModel
+
 __all__ = [
     "CompanyModel",
     "SchoolModel",
@@ -51,8 +68,7 @@ __all__ = [
     "AcademicYearModel",
     "ClassGroupModel",
     "ClassRoomModel",
-    "YearlyStudentModel",
-   
+    "YearlyStudentModel",   
     "SubjectGroupModel",
     "YearlyStaffModel",
     "SubjectModel",
@@ -74,4 +90,22 @@ __all__ = [
     "DisciplineTermModel",
     "DisciplineSequenceModel",
     "DisciplineAssessmentModel",
+
+    "FinanceCategoryModel",
+    "FinanceSubCategoryModel",
+    "FinanceItemModel",
+    "FinanceEntryModel",
+    "PayCategoryModel",
+    "PayRecursiveItem",
+    "PayStaticItem",
+    "PayRecursiveItemData",
+    "PayStaticItemData",
+
+    "ClassRollModel",
+    "StudentMessageModel",
+    "StudentMoveScanModel",
+    "BookCategoryModel",
+    "BookModel",
+    "BookingModel",
+
 ]
