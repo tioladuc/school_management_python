@@ -238,6 +238,17 @@
             {% endfor %}
           </div>
 
+          <!-- Alias Database -->
+          <div class="form-group">
+            <label for="{{ form.alias.id_for_label }}">Database Alias</label>
+
+            {{ form.alias }}
+
+            {% for error in form.alias.errors %}
+              <div class="error">{{ error }}</div>
+            {% endfor %}
+          </div>
+
           <!-- Tenant Database -->
           <div class="form-group">
             <label for="{{ form.tenant_database.id_for_label }}">Tenant Database</label>

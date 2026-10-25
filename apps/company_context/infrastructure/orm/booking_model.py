@@ -19,7 +19,12 @@ class BookingModel(models.Model):
 
     class Meta:
         db_table='booking'
-        constraints=[models.UniqueConstraint(fields=['sequence', 'name_fr', 'name_en'], name='%(class)s_uq_assessment_name')]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['book', 'yearly_student', 'booking_date'],
+                name='uq_booking_book_student_date'
+            )
+        ]
 
 __all__ = [
     "BookingModel",

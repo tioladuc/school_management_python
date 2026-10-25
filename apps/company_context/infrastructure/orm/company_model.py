@@ -13,7 +13,8 @@ class CompanyModel(models.Model):
     phone = models.CharField(max_length=50, blank=True)
     address = models.TextField(blank=True)
     
-    tenant_database = models.CharField(max_length=150, blank=True)
+    tenant_database = models.TextField(blank=True)
+    alias = models.CharField(max_length=150, blank=True, unique = True)
 
     status = models.CharField(
             max_length=20,

@@ -24,15 +24,12 @@ class CompanyErrorView(View):
     template_name = "company_context/company_error.html"
 
     def get(self, request):
-        print('CompanyErrorView.get()')
-        
         return render(
             request,
             self.template_name,
             {},
         )
     def post(self, request):
-        print('CompanyErrorView.post()')
         return render(
             request,
             self.template_name,
@@ -74,7 +71,7 @@ class CompanyLoginView(View):
             password=password,
         )
         result = service.login(userInDto)
-
+        
         # 4. Handle the result
         if not result.success:
             return render(
@@ -86,13 +83,14 @@ class CompanyLoginView(View):
                     "error": result.message,
                 },
             )
-
+        
         # 5. Login successful
         request.session["school_id"] = school_id
         request.session["profile"] = profile
         request.session["user_data"] = result.user_data
+        request.session["logged-in"] = True
 
-        return redirect(self.template_name_home)
+        return redirect(UrlRouteName.COMPANIES_LIST_NAME)#(self.template_name_home)
 
 
 class CompanyPasswordResetView(View):
@@ -208,6 +206,7 @@ class CompanyCreateView(View):
                 phone=form.cleaned_data["phone"],
                 address=form.cleaned_data["address"],
                 #status=form.cleaned_data["status"],
+                alias=form.cleaned_data["alias"],
                 tenant_database=form.cleaned_data["tenant_database"],)
             )
 
@@ -253,6 +252,7 @@ class CompanyUpdateView(View):
                 "address": company.address,
                 "status": company.status,
                 "tenant_database": company.tenant_database,
+                "alias": company.alias,
             }
         )
 
@@ -292,6 +292,7 @@ class CompanyUpdateView(View):
                 phone=form.cleaned_data["phone"],
                 address=form.cleaned_data["address"],
                 #status=form.cleaned_data["status"],
+                alias=form.cleaned_data["alias"],
                 tenant_database=form.cleaned_data["tenant_database"],)
             )
 

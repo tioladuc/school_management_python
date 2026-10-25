@@ -10,4 +10,5 @@ class CompanyDto:
     address: str
     status: str
     tenant_database: str
+    alias: str
     school_count: int = 0

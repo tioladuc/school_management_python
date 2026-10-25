@@ -24,7 +24,12 @@ class BookModel(models.Model):
 
     class Meta:
         db_table='book'
-        constraints=[models.UniqueConstraint(fields=['sequence', 'name_fr', 'name_en'], name='%(class)s_uq_assessment_name')]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['book_category', 'name_fr', 'name_en'],
+                name='uq_book_category_book_names'
+            )
+        ]
 
 __all__ = [
     "BookModel",

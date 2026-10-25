@@ -1,8 +1,7 @@
-from pathlib import Path
-from urllib.parse import urlparse, parse_qs, unquote
+
 from uuid import uuid4
 
-from django.db import connections, transaction
+from django.db import connections
 
 from apps.company_context.infrastructure.utilities.create_company_db import create_database
 from apps.company_context.infrastructure.utilities.create_tables_company import create_tables

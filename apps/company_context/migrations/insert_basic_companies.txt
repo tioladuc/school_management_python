@@ -1,0 +1,92 @@
+INSERT INTO company (
+    id,
+    code,
+    name,
+    email,
+    phone,
+    address,
+    status,
+    tenant_database,
+    alias,
+    created_at,
+    updated_at
+)
+VALUES
+(
+    1,
+    'COMP001',
+    'Learning Kids Québec',
+    'contact@learningkids.ca',
+    '514-555-1001',
+    '123 Rue Sainte-Catherine, Montréal, QC, Canada',
+    'ACTIVE',
+    'tenant_comp001',
+    'tenant001',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+),
+(
+    2,
+    'COMP002',
+    'Montreal Academy',
+    'info@montrealacademy.ca',
+    '514-555-1002',
+    '456 Boulevard René-Lévesque, Montréal, QC, Canada',
+    'ACTIVE',
+    'tenant_comp002',
+    'tenant002',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+),
+(
+    3,
+    'COMP003',
+    'Quebec Education Group',
+    'admin@qeg.ca',
+    '418-555-1003',
+    '789 Grande Allée, Québec, QC, Canada',
+    'ACTIVE',
+    'tenant_comp003',
+    'tenant003',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+),
+(
+    4,
+    'COMP004',
+    'Northern Schools Inc.',
+    'contact@northernschools.ca',
+    '204-555-1004',
+    '100 Main Street, Winnipeg, MB, Canada',
+    'SUSPENDED',
+    'tenant_comp004',
+    'tenant004',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+),
+(
+    5,
+    'COMP005',
+    'Prairie Learning Center',
+    'info@prairielearning.ca',
+    '780-555-1005',
+    '200 Jasper Avenue, Edmonton, AB, Canada',
+    'ACTIVE',
+    'tenant_comp005',
+    'tenant005',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+),
+(
+    6,
+    'COMP006',
+    'Alberta Education Services',
+    'contact@abeducation.ca',
+    '403-555-1006',
+    '300 8 Avenue SW, Calgary, AB, Canada',
+    'TERMINATED',
+    'tenant_comp006',
+    'tenant006',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+);

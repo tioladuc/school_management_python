@@ -37,8 +37,14 @@ class CompanyForm(forms.Form):
         initial="ACTIVE",
     )
 
-    tenant_database = forms.CharField(
+    alias = forms.CharField(
         max_length=150,
         required=False,
-        label="Tenant Database",
+        label="Database Alias",
     )
+
+    tenant_database = forms.CharField(
+            max_length=150,
+            required=False,
+            label="Tenant Database",
+        )

@@ -5,6 +5,7 @@ from ...domain.services.company_activation_service import CompanyActivationServi
 from ...domain.services.company_suspension_service import CompanySuspensionService
 from ...domain.exceptions import ConflictError, NotFoundError
 from ..dto.company_dto import CompanyDto
+from types import SimpleNamespace
 
 class CompanyApplicationService:
     def __init__(self, companies, events=None):
@@ -64,13 +65,17 @@ class CompanyApplicationService:
         ]
 
     def login(self, userInDto):
+        print(userInDto.company_code , "========666666666666666")
         company = self.companies.get_by_code(userInDto.company_code)
+        print(company)
         if company is None:
             return {"success": False, "message": "Company not found."}
         if company.status != "ACTIVE":
             return {"success": False, "message": "Company is not active."}
         # Here you would typically check the user's credentials against a user repository
         # For this example, we'll assume the login is successful if the company is active
+        data = {"success": True, "message": "Login successful.", "user_data": None}
+        return SimpleNamespace(**data)
         return {"success": True, "message": "Login successful.", "user_data": None}
 
 
@@ -122,4 +127,4 @@ class CompanyApplicationService:
     
     @staticmethod
     def to_dto(c):
-        return CompanyDto(c.id, c.code.value, c.name, c.email, c.phone, c.address, c.status, c.tenant_database)
+        return CompanyDto(c.id, c.code.value, c.name, c.email, c.phone, c.address, c.status, c.tenant_database, c.alias)

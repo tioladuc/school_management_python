@@ -1,0 +1,12 @@
+python manage.py migrate  # Django will create a new SQLite database and apply the migrations for all installed applications, including company_context
+
+python manage.py migrate company_context 0001  # If you specifically want to apply the initial migration for company_context first, run
+
+python manage.py migrate
+
+python manage.py showmigrations company_context
+
+grep -n -E "alias|connectionString|tenant_database" \
+apps/company_context/infrastructure/orm/company_model.py
+
+python manage.py makemigrations company_context

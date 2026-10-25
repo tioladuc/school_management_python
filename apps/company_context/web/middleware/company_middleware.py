@@ -3,6 +3,8 @@ from django.shortcuts import redirect
 from apps.company_context.infrastructure.orm.company_model import CompanyModel
 from apps.company_context.web.utilities.url_route_name import UrlRouteName
 
+# from apps.company_context.infrastructure.repositories.company_repository import CompanyRepository
+
  
 
 class CompanyMiddleware:
@@ -37,37 +39,28 @@ class CompanyMiddleware:
         if request.path.startswith(tuple(self.EXCLUDED_PATHS)):
             return self.get_response(request)
 
-        print('duclair 01')
         # Authenticated user
-        if True: #request.user.is_authenticated:
+        if request.session["logged-in"]: #request.user.is_authenticated:
             return self.get_response(request)
 
-        print('duclair 02')
         # Company already stored in session
         company_code = request.session.get("company_code")
-
-        print('duclair 03')
+        
         if company_code:
             return redirect(UrlRouteName.LOGIN_NAME)
-
-        print('duclair 04')
+        
         # Company code sent in the request
         company_code = request.POST.get("company_code")
-
-        # print('duclair 05 = ' + company_code)
+        
         if company_code:
             company = CompanyModel.objects.filter(
                 code=company_code
             ).first()
 
-            print('duclair 05.1 = ' + str(company))
-            print(company)
             if company:
                 request.session["company_code"] = company_code
                 return redirect(UrlRouteName.LOGIN_NAME)
 
- 
-        print('duclair 06')
         # Nothing found
         return redirect(UrlRouteName.ERROR_NAME)
 
@@ -76,8 +69,10 @@ class CompanyMiddleware:
         if company_code is None:
             company_code = request.session.get("company_code")
         
-        print('GOGOGOG 05 = ')
-        print(company_code)
+        # print('GOGOGOG 05 = ', company_code)
+        # print(CompanyModel.objects.all())
+        # print(CompanyModel.objects.filter(code=company_code).first())
+        # print(CompanyRepository.search())
         if company_code:
             self.company = CompanyModel.objects.filter(
                     code=company_code

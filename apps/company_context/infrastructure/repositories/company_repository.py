@@ -45,12 +45,17 @@ class CompanyRepository:
     def exists_by_code(self, code):
         return CompanyModel.objects.filter(code=code.strip().upper()).exists()
 
+    def get_by_code(self, code):
+        return CompanyModel.objects.filter(code=code.strip().upper()).first()
+
     def search(self, search="", status=None):
         qs = CompanyModel.objects.all()
         if search:
             qs = qs.filter(name__icontains=search) | qs.filter(code__icontains=search)
         if status:
             qs = qs.filter(status=status)
+
+        print('dododododo dodododo dododo')
         sample_companies = [
             {
                 "id": "1",
@@ -61,6 +66,7 @@ class CompanyRepository:
                 "address": "123 Rue Sainte-Catherine, Montréal, QC, Canada",
                 "status": "ACTIVE",
                 "tenant_database": "tenant_comp001",
+                "alias": "tenant001",
             },
             {
                 "id": "2",
@@ -71,6 +77,7 @@ class CompanyRepository:
                 "address": "456 Boulevard René-Lévesque, Montréal, QC, Canada",
                 "status": "ACTIVE",
                 "tenant_database": "tenant_comp002",
+                "alias": "tenant002",
             },
             {
                 "id": "3",
@@ -81,6 +88,7 @@ class CompanyRepository:
                 "address": "789 Grande Allée, Québec, QC, Canada",
                 "status": "ACTIVE",
                 "tenant_database": "tenant_comp003",
+                "alias": "tenant003",
             },
             {
                 "id": "4",
@@ -91,6 +99,7 @@ class CompanyRepository:
                 "address": "100 Main Street, Winnipeg, MB, Canada",
                 "status": "SUSPENDED",
                 "tenant_database": "tenant_comp004",
+                "alias": "tenant004",
             },
             {
                 "id": "5",
@@ -101,6 +110,7 @@ class CompanyRepository:
                 "address": "200 Jasper Avenue, Edmonton, AB, Canada",
                 "status": "ACTIVE",
                 "tenant_database": "tenant_comp005",
+                "alias": "tenant005",
             },
             {
                 "id": "6",
@@ -111,6 +121,7 @@ class CompanyRepository:
                 "address": "300 8 Avenue SW, Calgary, AB, Canada",
                 "status": "TERMINATED",
                 "tenant_database": "tenant_comp006",
+                "alias": "tenant006",
             },
         ]
         return [CompanyMapper.to_domain(x) for x in qs.order_by("name")]

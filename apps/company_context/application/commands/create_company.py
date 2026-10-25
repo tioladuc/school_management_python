@@ -7,4 +7,5 @@ class CreateCompanyCommand:
     email: str
     phone: str = ""
     address: str = ""
+    alias: str = ""
     tenant_database: str = ""
