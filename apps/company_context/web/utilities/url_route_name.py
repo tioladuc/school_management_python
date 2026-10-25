@@ -31,6 +31,9 @@ class UrlRouteName:
     COMPANY_UPDATE_PAGE: Final[str] = "companies/<int:company_id>/edit/"
     COMPANY_UPDATE_NAME: Final[str] = "company-update"
 
+    COMPANY_MANAGE_BD_PAGE: Final[str] = "companies/<int:company_id>/manage/"
+    COMPANY_MANAGE_BD_NAME: Final[str] = "company-manage"
+
     COMPANY_DELETE_PAGE: Final[str] = "companies/<int:company_id>/delete/"
     COMPANY_DELETE_NAME: Final[str] = "company-delete"
 

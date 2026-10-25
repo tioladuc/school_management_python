@@ -316,6 +316,52 @@ class CompanyUpdateView(View):
             )
 
 
+class CompanyManageBDView(View):
+
+    template_name = "company_context/company_manage_bd.html"
+
+    def get(self, request, company_id):
+
+        service = get_company_service()
+        service.initialize_company_bd(company_id)
+        
+        # print('before company creation bd+++')
+        # service.create_school_from_scratch(company_id)
+        # print('after company creation bd++++')
+
+        company = service.get(GetCompanyQuery(company_id=company_id))
+
+        if company is None:
+            return redirect(UrlRouteName.COMPANIES_LIST_NAME)
+
+        return render(
+            request,
+            self.template_name,
+            {
+                "company": company,
+            },
+        )
+
+    def post(self, request, company_id):
+
+        service = get_company_service()
+
+        try:
+            service.delete_company(company_id)
+
+            messages.success(
+                request,
+                "Company deleted successfully.",
+            )
+
+        except Exception as exc:
+            messages.error(
+                request,
+                str(exc),
+            )
+
+        return redirect(UrlRouteName.COMPANIES_LIST_NAME)
+
 class CompanyDeleteView(View):
 
     template_name = "company_context/company_confirm_delete.html"

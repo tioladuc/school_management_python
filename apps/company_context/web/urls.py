@@ -8,6 +8,7 @@ from .views.company_views import (
     CompanyCreateView,
     CompanyUpdateView,
     CompanyDeleteView,
+    CompanyManageBDView,
     CompanyEntryView,
     CompanyLoginView,
     CompanyPasswordResetView,
@@ -56,8 +57,14 @@ urlpatterns = [
         name=UrlRouteName.COMPANY_UPDATE_NAME,
     ),
     path(
-        UrlRouteName.COMPANY_DELETE_PAGE,
-        CompanyDeleteView.as_view(),
-        name=UrlRouteName.COMPANY_DELETE_NAME,
+        UrlRouteName.COMPANY_MANAGE_BD_PAGE,
+        CompanyManageBDView.as_view(),
+        name=UrlRouteName.COMPANY_MANAGE_BD_NAME,
     ),
+
+    path(
+            UrlRouteName.COMPANY_DELETE_PAGE,
+            CompanyDeleteView.as_view(),
+            name=UrlRouteName.COMPANY_DELETE_NAME,
+        ),
 ]
