@@ -14,3 +14,9 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 application = get_wsgi_application()
+
+# charge the alias and connectionString for databases for all companies
+
+from config.startup import load_tenant_databases
+
+load_tenant_databases()

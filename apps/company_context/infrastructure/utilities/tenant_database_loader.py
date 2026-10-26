@@ -3,17 +3,17 @@ from urllib.parse import urlparse, unquote
 from django.conf import settings
 from django.db import connections
 
-
+"""
 class TenantDatabaseLoader:
 
     @classmethod
     def load(cls):
-        """
-        Load company aliases and connection strings into Django's
-        active database configuration.
+        
+        #Load company aliases and connection strings into Django's
+        #active database configuration.
 
-        Only runs when one database is configured initially.
-        """
+        #Only runs when one database is configured initially.
+        
 
         if len(settings.DATABASES) != 1:
             return
@@ -82,4 +82,4 @@ class TenantDatabaseLoader:
 
         raise ValueError(
             f"Unsupported database connection scheme: {scheme}"
-        )
+        )"""

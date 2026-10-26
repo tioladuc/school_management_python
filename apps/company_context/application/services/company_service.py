@@ -74,7 +74,7 @@ class CompanyApplicationService:
             return {"success": False, "message": "Company is not active."}
         # Here you would typically check the user's credentials against a user repository
         # For this example, we'll assume the login is successful if the company is active
-        data = {"success": True, "message": "Login successful.", "user_data": None}
+        data = {"success": True, "message": "Login successful.", "user_data": None, "alias": company.alias}
         return SimpleNamespace(**data)
         return {"success": True, "message": "Login successful.", "user_data": None}
 

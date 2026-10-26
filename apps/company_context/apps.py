@@ -4,7 +4,7 @@ class CompanyContextConfig(AppConfig):
     name='apps.company_context'
 
 ##############################################
-from django.apps import AppConfig
+"""from django.apps import AppConfig
 
 
 class CompanyContextConfig(AppConfig):
@@ -16,4 +16,4 @@ class CompanyContextConfig(AppConfig):
             TenantDatabaseLoader,
         )
 
-        #TenantDatabaseLoader.load()
+        #TenantDatabaseLoader.load()"""

@@ -4,13 +4,16 @@ from apps.company_context.web import views
 from apps.company_context.web.utilities.url_route_name import UrlRouteName
 from .views.company_views import (
     CompanyErrorView,
+    
     CompanyListView,
     CompanyCreateView,
     CompanyUpdateView,
     CompanyDeleteView,
+
     CompanyManageBDView,
     CompanyEntryView,
     CompanyLoginView,
+
     CompanyPasswordResetView,
     CompanyCreateAccountView,
 )

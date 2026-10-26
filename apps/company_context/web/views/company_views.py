@@ -88,10 +88,12 @@ class CompanyLoginView(View):
         request.session["school_id"] = school_id
         request.session["profile"] = profile
         request.session["user_data"] = result.user_data
+        request.session["alias"] = result.alias
         request.session["logged-in"] = True
+        print(request.session)
+        print("duclair tiotsop lambou et toi toi toi toi")
 
         return redirect(UrlRouteName.COMPANIES_LIST_NAME)#(self.template_name_home)
-
 
 class CompanyPasswordResetView(View):
 
@@ -118,7 +120,6 @@ class CompanyPasswordResetView(View):
                 "profiles": service.getProfiles(),
             },
         )
-
 
 class CompanyCreateAccountView(View):
 
@@ -148,7 +149,6 @@ class CompanyCreateAccountView(View):
             },
         )
 
-
 class CompanyListView(View):
 
     template_name = "company_context/company_list.html"
@@ -165,7 +165,6 @@ class CompanyListView(View):
                 "companies": companies,
             },
         )
-
 
 class CompanyCreateView(View):
 
@@ -228,7 +227,6 @@ class CompanyCreateView(View):
                     "title": "Create Company",
                 },
             )
-
 
 class CompanyUpdateView(View):
 
@@ -314,7 +312,6 @@ class CompanyUpdateView(View):
                     "title": "Update Company",
                 },
             )
-
 
 class CompanyManageBDView(View):
 
@@ -407,7 +404,6 @@ class CompanyDeleteView(View):
             )
 
         return redirect(UrlRouteName.COMPANIES_LIST_NAME)
-
 
 @method_decorator(csrf_exempt, name="dispatch")
 class CompanyEntryView(View):
