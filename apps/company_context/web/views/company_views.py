@@ -320,7 +320,7 @@ class CompanyManageBDView(View):
     def get(self, request, company_id):
 
         service = get_company_service()
-        service.initialize_company_bd(company_id)
+        #service.initialize_company_bd_with_empty_basic_tables(company_id)
         
         # print('before company creation bd+++')
         # service.create_school_from_scratch(company_id)
@@ -336,15 +336,38 @@ class CompanyManageBDView(View):
             self.template_name,
             {
                 "company": company,
+                "message": '',
             },
         )
 
     def post(self, request, company_id):
 
         service = get_company_service()
-
+        company = service.get(GetCompanyQuery(company_id=company_id))
+        print(request.POST.get("operation"), 'SSSSSSSSSSSSSSSSSSSSS')
+        operation = request.POST.get("operation")
+        message = ''
+        print(operation, 'SSSSSSSSSSSSSSSSSSSSS')
+        if(operation == "Create DB with Basic Tables"):
+            service.initialize_company_bd_with_empty_basic_tables(company_id)
+            message = 'Company database created successfully.'
+        elif(operation == "Create BD Tables for School"):
+            #service.initialize_company_bd_with_empty_basic_tables(company_id)
+            service.prepare_empty_tables_for_school(company_id)
+            message = 'Company database created and initialized successfully.'
+        elif(operation == "Sample Data"):
+            service.prepare_sample_data_for_school(company_id)
+            message = 'Company sample data inserted successfully.'
+        elif(operation == 'Drop Database'):
+            service.drop_database(company_id)
+            message = 'Company database dropped successfully.'
+        elif(operation == 'Restore Backup'):
+            #service.restore_backup(company_id)
+            message = 'Company database restored successfully.'
+        
+        
         try:
-            service.delete_company(company_id)
+            #service.delete_company(company_id)
 
             messages.success(
                 request,
@@ -357,7 +380,15 @@ class CompanyManageBDView(View):
                 str(exc),
             )
 
-        return redirect(UrlRouteName.COMPANIES_LIST_NAME)
+        return render(
+            request,
+            self.template_name,
+            {
+                "company": company,
+                "message": message,
+            },
+        )
+        #return redirect(UrlRouteName.COMPANIES_LIST_NAME)
 
 class CompanyDeleteView(View):
 
@@ -366,7 +397,7 @@ class CompanyDeleteView(View):
     def get(self, request, company_id):
 
         service = get_company_service()
-        service.initialize_company_bd(company_id)
+        service.initialize_company_bd_with_empty_basic_tables(company_id)
         
         # print('before company creation bd+++')
         # service.create_school_from_scratch(company_id)

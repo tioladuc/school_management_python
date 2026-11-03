@@ -20,6 +20,30 @@ class SchoolRepository:
     def __init__(self, connection_alias):
         self.connection_alias = connection_alias
 
+    
+    def get_all(self, db_alias="default"):
+        return SchoolModel.objects.using(db_alias).all()
+
+    def get_by_id(self, academic_year_id, db_alias="default"):
+        return SchoolModel.objects.using(db_alias).filter(
+            id=academic_year_id
+        ).first()
+
+    def create(self, data, db_alias="default"):
+        return SchoolModel.objects.using(db_alias).create(**data)
+
+    def update(self, academic_year_id, data, db_alias="default"):
+        return SchoolModel.objects.using(db_alias).filter(
+            id=academic_year_id
+        ).update(**data)
+
+    def delete(self, academic_year_id, db_alias="default"):
+        return SchoolModel.objects.using(db_alias).filter(
+            id=academic_year_id
+        ).delete()
+
+
+    # ===================================================================
     def get(self, school_id):
 
         try:

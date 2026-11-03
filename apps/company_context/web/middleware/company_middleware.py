@@ -32,6 +32,14 @@ class CompanyMiddleware:
 
     def __call__(self, request): 
         company_exists = self.check_company_existence(request)
+        
+        # As we login from an outside website
+        if request.path == "/":
+            if company_exists:
+                return redirect(UrlRouteName.LOGIN_NAME)
+            else:
+                return redirect(UrlRouteName.ERROR_NAME)
+       
         if request.path.startswith(tuple(self.EXCLUDED_PATHS_MUST_HAVE_COMPANY)) and not company_exists:
             return redirect(UrlRouteName.ERROR_NAME)
         

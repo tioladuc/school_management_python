@@ -1,3 +1,6 @@
+# not used in this project, but could be used to route database operations 
+# to the correct tenant database based on the current request context.
+
 class TenantDatabaseRouter:
     def db_for_read(self, model, **hints):
         from django.db import connections

@@ -47,6 +47,7 @@ def create_tables(alias: str, model_classes: list) -> None:
             for model_class in model_classes:
                 _validate_model(model_class)
                 table_name = model_class._meta.db_table
+                print("TABLE ===> ", table_name)
 
                 if table_name in existing_tables:
                     continue

@@ -109,6 +109,12 @@
       .btn-delete:hover {
         background-color: #b91c1c;
       }
+      .select-form{
+        /*width: 100%;*/
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
     </style>
   </head>
 
@@ -119,8 +125,14 @@
 
         <div class="warning">
           <strong>Warning:</strong>
-          You are about to manage company bd. This action cannot be undone.
+          You are about to manage company bd. These actions cannot be undone.
+
+          {% if message %}
+              <br><br><strong>{{message}}</strong>
+          {% endif %}
+          
         </div>
+        
 
         <div class="company-info">
           <div class="company-row">
@@ -153,25 +165,26 @@
             <div class="company-value">{{ company.tenant_database }}</div>
           </div>
 
+          
+
+        <form method="post">
+          {% csrf_token %}
           <div class="company-row">
             <div class="company-label">Action :</div>
             <div class="company-value">
-              <select name="operation" id="operation">
-                <option value="Create DB">Create DB</option>
-                <option value="Create & Initial DB">Create & Initial DB</option>
-                <option value="Insert Data">Insert Data</option>
-                <option value="Create Backup">Create Backup</option>
+              <select name="operation" id="operation" class="select-form">
+                <option value="Create DB with Basic Tables">Create DB with Basic Tables</option>
+                <option value="Create BD Tables for School">Create BD Tables for School</option>
+                <option value="Sample Data">Sample Data</option>
+                <option value="Drop Database">Drop Database</option>
                 <option value="Delete BD">Delete BD</option>
               </select>
             </div>
           </div>
         </div>
 
-        <form method="post">
-          {% csrf_token %}
-
           <div class="actions">
-            <a href="{% url UrlRouteName.COMPANIES_LIST_NAME %}" class="btn btn-cancel">Cancel</a>
+            <a href="{% url UrlRouteName.COMPANIES_LIST_NAME %}" class="btn btn-cancel">Back To List</a>
 
             <button type="submit" class="btn btn-delete">Perfom DB Action Company</button>
           </div>

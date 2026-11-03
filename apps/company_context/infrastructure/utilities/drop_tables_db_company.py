@@ -33,26 +33,32 @@ def delete_database(
     WARNING:
         This operation is destructive and cannot be undone.
     """
-
+    print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
     if not connection_string:
         raise ValueError(
             "connection_string cannot be empty."
         )
-
-    if not model_classes:
-        raise ValueError(
-            "model_classes cannot be empty."
-        )
-
+    print("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM")    
+    print(connections)
     connection = connections[alias]
-    delete_model_tables( connection, model_classes)
+    print("NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN", connection)
+    print(alias)
 
+    if model_classes:
+        delete_model_tables( connection, model_classes)
+        print("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+        
+    
+    
     engine = _detect_engine(connection_string)
-
+    print('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ', engine, connection_string)
+    print(connection_string)
+    print('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF')
+    print()
+    print('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF')
     if engine == "sqlite":
         _delete_sqlite_database(
-            connection,
-            model_classes,
+            connection_string #connection
         )
         return
 
@@ -183,21 +189,26 @@ def _detect_engine(connection_string: str) -> str:
 def _delete_sqlite_database(
     database_config,
 ):
-
+    print("AAAAAAAAAAAQQQQQQQQQQQQWWWWWWWWWWWWW")
+    print(database_config)
     database_path = database_config["NAME"]
 
+    print(f"Deleting SQLite database: {database_path} 444444444444444444444444444444")
     if not database_path:
         raise ValueError(
             "SQLite database path is missing."
         )
 
+    print(f"Deleting SQLite database: {database_path} 77777777777777777777777777777")
     path = Path(
         database_path
     ).expanduser()
 
+    print(f"Deleting SQLite database: {database_path} 888888888888888888888888888888")
     if not path.exists():
         return
 
+    print(f"Deleting SQLite database: {database_path} 99999999999999999999999999999")
     # Delete the actual SQLite database file.
     if path.exists():
         path.unlink()

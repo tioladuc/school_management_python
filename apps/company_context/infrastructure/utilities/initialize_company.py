@@ -9,8 +9,8 @@ from apps.company_context.infrastructure.utilities.dynamic_database_config impor
 from apps.company_context.infrastructure.utilities.insert_data_tables import insert_data
 
 from apps.company_context.infrastructure.utilities.script_company_creation import (
-    produce_tables_models_for_company_tocreate,
-    produce_data_to_insert_base_company,
+    produce_tables_models_for_company_basic_table_create,
+    #produce_data_to_insert_base_company,
 )
 from apps.company_context.infrastructure.utilities.script_school_creation import (
     produce_tables_models_for_school_tocreate,
@@ -22,7 +22,8 @@ from apps.company_context.infrastructure.utilities.drop_tables_db_company import
     do_backup_company_database,
 )
 
-def preparer_company_database(connection_string: str) -> dict:
+# Used in CompanyRepository and web services.
+def preparer_company_database_basic_tables(connection_string: str) -> dict:
     """
     Prepare a company database by creating tables and inserting data.
 
@@ -36,15 +37,14 @@ def preparer_company_database(connection_string: str) -> dict:
     alias = f"dynamic_db_{uuid4().hex}"
     configure_database_config(connection_string, alias)
 
-    data = produce_tables_models_for_company_tocreate()
+    data = produce_tables_models_for_company_basic_table_create()
     create_tables(alias, data)
-    insert_data(alias, produce_data_to_insert_base_company())
-
+    
     connections[alias].close()
     connections.databases.pop(alias, None)
 
-
-def preparer_tables_for_school(connection_string: str) -> dict:
+# Used in SchoolRepository to prepare the database for a school.
+def prepare_empty_tables_for_school(connection_string: str) -> dict:
     """
     Prepare a company database by creating tables and inserting data.
 
@@ -64,7 +64,7 @@ def preparer_tables_for_school(connection_string: str) -> dict:
     connections.databases.pop(alias, None)
 
 
-def preparer_data_for_school(connection_string: str) -> dict:
+def prepare_sample_data_for_school(connection_string: str) -> dict:
     """
     Prepare a company database by creating tables and inserting data.
 
@@ -95,7 +95,9 @@ def drop_database(connection_string: str) -> None:
     alias = f"dynamic_db_{uuid4().hex}"
     configure_database_config(connection_string, alias)
 
-    data_company = produce_tables_models_for_company_tocreate()
+    print("produce_tables_models_for_company_basic_table_create")
+    data_company = produce_tables_models_for_company_basic_table_create()
+    print("produce_tables_models_for_school_tocreate")
     data_school = produce_tables_models_for_school_tocreate()
     delete_model_tables( alias, data_school)
     delete_model_tables( alias, data_company)

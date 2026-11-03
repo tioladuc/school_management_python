@@ -80,13 +80,49 @@ class CompanyApplicationService:
 
 
     # For company database initialization and school creation
-    def initialize_company_bd(self, company_id):
+    def initialize_company_bd_with_empty_basic_tables(self, company_id):
         try:
-            self.companies.initialize_company_bd(company_id)
+            self.companies.initialize_company_bd_with_empty_basic_tables(company_id)
             return True
         except :
             return False
     
+    def prepare_empty_tables_for_school(self, company_id):
+        try:
+            self.companies.prepare_empty_tables_for_school(company_id)
+            return True
+        except :
+            return False 
+
+    def prepare_sample_data_for_school(self, company_id):
+        try:
+            self.companies.prepare_sample_data_for_school(company_id)
+            return True
+        except :
+            return False 
+    
+    def drop_database(self, company_id):
+        try:
+            self.companies.drop_database(company_id)
+            return True
+        except :
+            return False 
+    
+    def backup_company_database(self, company_id):
+        try:
+            self.companies.backup_company_database(company_id)
+            return True
+        except :
+            return False 
+
+
+
+
+
+
+
+    
+
     def create_school_from_scratch(self, company_id):
         try:
             self.companies.create_school_from_scratch(company_id)
@@ -101,27 +137,7 @@ class CompanyApplicationService:
         except :
             return False 
 
-    def preparer_tables_for_school(self, company_id):
-            try:
-                self.companies.preparer_tables_for_school(company_id)
-                return True
-            except :
-                return False 
-
-    def drop_database(self, company_id):
-        try:
-            self.companies.drop_database(company_id)
-            return True
-        except :
-            return False 
-
-    def backup_company_database(self, company_id):
-        try:
-            self.companies.backup_company_database(company_id)
-            return True
-        except :
-            return False 
-
+    
 
 
     

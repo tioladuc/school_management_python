@@ -1,11 +1,13 @@
+from urllib import request
+
 from ..orm.models import CompanyModel
 from ..mappers.company_mapper import CompanyMapper
 from apps.company_context.infrastructure.utilities.initialize_company import (
     drop_database,
-    preparer_company_database,
-    preparer_data_for_school,
+    preparer_company_database_basic_tables,
+    prepare_sample_data_for_school,
     preparer_data_for_school_from_another_school,
-    preparer_tables_for_school,
+    prepare_empty_tables_for_school,
     backup_company_database,
 )
 
@@ -132,27 +134,27 @@ class CompanyRepository:
 
 
     ##OK
-    def initialize_company_bd(self, company_id):
+    def initialize_company_bd_with_empty_basic_tables(self, company_id):
         try:
             obj = CompanyModel.objects.get(pk=company_id)
-            preparer_company_database(obj.tenant_database)
+            preparer_company_database_basic_tables(obj.tenant_database)
             return True
         except CompanyModel.DoesNotExist:
             return False
 
     ##OK
-    def create_school_from_scratch(self, company_id):
+    def prepare_sample_data_for_school(self, company_id):
         try:
             obj = CompanyModel.objects.get(pk=company_id)
-            preparer_data_for_school(obj.tenant_database)
+            prepare_sample_data_for_school(obj.tenant_database)
             return True
         except CompanyModel.DoesNotExist:
             return False
     ##OK
-    def preparer_tables_for_school(self, company_id):
+    def prepare_empty_tables_for_school(self, company_id):
         try:
             obj = CompanyModel.objects.get(pk=company_id)
-            preparer_tables_for_school(obj.tenant_database)
+            prepare_empty_tables_for_school(obj.tenant_database)
             return True
         except CompanyModel.DoesNotExist:
             return False

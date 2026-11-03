@@ -4,7 +4,7 @@
 from apps.company_context.infrastructure.orm.staff_model import StaffModel
 
 
-def produce_tables_models_for_company_tocreate() -> list:
+def produce_tables_models_for_company_basic_table_create() -> list:
     """
     Produce a list of Django model classes to create tables for.
 
@@ -26,8 +26,9 @@ def produce_tables_models_for_company_tocreate() -> list:
 
 
 
+# To delete
 
-def produce_data_to_insert_base_company() -> list:
+#def produce_data_to_insert_base_company() -> list:
     """
     Produce a list of data to insert into the database.
 
@@ -36,7 +37,7 @@ def produce_data_to_insert_base_company() -> list:
     List of dictionaries containing model classes and records.
     """
 
-    from apps.company_context.infrastructure.orm.models import (
+    """from apps.company_context.infrastructure.orm.models import (
         SchoolModel,
     )
 
@@ -115,4 +116,4 @@ def produce_data_to_insert_base_company() -> list:
                 },
             ],
         },
-    ]
+    ]"""

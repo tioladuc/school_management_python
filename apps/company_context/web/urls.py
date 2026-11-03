@@ -2,6 +2,7 @@ from django.urls import path
 
 from apps.company_context.web import views
 from apps.company_context.web.utilities.url_route_name import UrlRouteName
+from apps.company_context.web.views.school_views import SchoolCreateView, SchoolDeleteView, SchoolListView, SchoolUpdateView
 from .views.company_views import (
     CompanyErrorView,
     
@@ -44,6 +45,7 @@ urlpatterns = [
         CompanyCreateAccountView.as_view(),
         name=UrlRouteName.CREATE_ACCOUNT_NAME,
     ),
+    #  for companies
     path(
         UrlRouteName.COMPANIES_LIST_PAGE,
         CompanyListView.as_view(),
@@ -70,4 +72,32 @@ urlpatterns = [
             CompanyDeleteView.as_view(),
             name=UrlRouteName.COMPANY_DELETE_NAME,
         ),
+
+    #  for schools
+        path(
+            UrlRouteName.SCHOOLS_LIST_PAGE,
+            SchoolListView.as_view(),
+            name=UrlRouteName.SCHOOLS_LIST_NAME,
+        ),
+        path(
+            UrlRouteName.SCHOOL_CREATE_PAGE,
+            SchoolCreateView.as_view(),
+            name=UrlRouteName.SCHOOL_CREATE_NAME,
+        ),
+        path(
+            UrlRouteName.SCHOOL_UPDATE_PAGE,
+            SchoolUpdateView.as_view(),
+            name=UrlRouteName.SCHOOL_UPDATE_NAME,
+        ),
+        #path(
+        #    UrlRouteName.SCHOOL_MANAGE_BD_PAGE,
+        #    SchoolManageBDView.as_view(),
+        #    name=UrlRouteName.SCHOOL_MANAGE_BD_NAME,
+        #),
+    
+        path(
+                UrlRouteName.SCHOOL_DELETE_PAGE,
+                SchoolDeleteView.as_view(),
+                name=UrlRouteName.SCHOOL_DELETE_NAME,
+            ),
 ]

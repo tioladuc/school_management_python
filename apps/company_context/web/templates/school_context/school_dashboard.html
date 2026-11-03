@@ -1,0 +1,62 @@
+{% extends 'company_context/company_base.html' %}
+{% load static %}
+{% block title %}
+  Schools
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    ">
+      <h1>Schools</h1>
+
+      <a href="{% url UrlRouteName.SCHOOL_CREATE_NAME %}" class="btn btn-primary">+ Create School</a>
+    </div>
+
+    <div class="card">
+      {% if schools %}
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th style="text-align:left; padding:12px;">Code</th>
+
+              <th style="text-align:left; padding:12px;">Name</th>
+
+              <th style="text-align:left; padding:12px;">Email</th>
+
+              <th style="text-align:left; padding:12px;">Status</th>
+
+              <th style="text-align:left; padding:12px;">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for school in schools %}
+              <tr>
+                <td style="padding:12px;">{{ school.code }}</td>
+
+                <td style="padding:12px;">{{ school.name_fr }} / {{ school.name_en }}</td>
+
+                <td style="padding:12px;">{{ school.email }}</td>
+
+                <td style="padding:12px;">{{ school.status }}</td>
+
+                <td style="padding:12px;">
+                  <a href="{% url UrlRouteName.SCHOOL_UPDATE_NAME school.id %}" class="btn btn-primary">Edit</a>
+
+                  <a href="{% url UrlRouteName.SCHOOL_DELETE_NAME school.id %}" class="btn btn-danger">Delete</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No schools found.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

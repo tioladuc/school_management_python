@@ -10,18 +10,26 @@ def produce_tables_models_for_school_tocreate() -> list:
     """
     
     from apps.company_context.infrastructure.orm.models import (
-        SchoolModel,
+        AcademicYearModel,
+        ClassGroupModel,
+        SubjectGroupModel,
+        SubjectModel,
+        StaffModel,
     )
     
     return [
-        SchoolModel,
+        AcademicYearModel,
+        ClassGroupModel,
+        SubjectGroupModel,
+        SubjectModel,
+        StaffModel,
     ]
 
 
 
 def produce_data_to_insert_for_school() -> list:
     """
-    Produce a list of data to insert into the database.
+    Produce sample data to insert into the tenant database.
 
     Returns
     -------
@@ -33,40 +41,70 @@ def produce_data_to_insert_for_school() -> list:
         StaffModel,
     )
 
+    print("Producing data to insert for school...++++++++++++++++")
+
     return [
         {
             "model": SchoolModel,
             "records": [
                 {
                     "code": "SCH001",
-                    "name": "Primary School",
+                    "name_fr": "École primaire",
+                    "name_en": "Primary School",
+                    "phone": "+2348012345001",
+                    "email": "info.sch001@example.com",
+                    "address": "12 Lagos Street",
+                    "autorization": "AUTH-SCH001",
+                    "founder": "Amina Okafor",
+                    "principal": "Daniel Mensah",
                     "city": "Lagos",
                     "country": "Nigeria",
                     "status": "ACTIVE",
                 },
                 {
                     "code": "SCH002",
-                    "name": "Secondary School",
+                    "name_fr": "École secondaire",
+                    "name_en": "Secondary School",
+                    "phone": "+2348012345002",
+                    "email": "info.sch002@example.com",
+                    "address": "25 Abuja Avenue",
+                    "autorization": "AUTH-SCH002",
+                    "founder": "Grace Bello",
+                    "principal": "Samuel Adeyemi",
                     "city": "Abuja",
                     "country": "Nigeria",
                     "status": "ACTIVE",
                 },
                 {
                     "code": "SCH003",
-                    "name": "Community School",
+                    "name_fr": "École communautaire",
+                    "name_en": "Community School",
+                    "phone": "+2348012345003",
+                    "email": "info.sch003@example.com",
+                    "address": "8 Ibadan Road",
+                    "autorization": "AUTH-SCH003",
+                    "founder": "Samuel Adeyemi",
+                    "principal": "Amina Okafor",
                     "city": "Ibadan",
                     "country": "Nigeria",
                     "status": "SUSPENDED",
                 },
                 {
                     "code": "SCH004",
-                    "name": "International School",
+                    "name_fr": "École internationale",
+                    "name_en": "International School",
+                    "phone": "+2332012345004",
+                    "email": "info.sch004@example.com",
+                    "address": "15 Accra Avenue",
+                    "autorization": "AUTH-SCH004",
+                    "founder": "Daniel Mensah",
+                    "principal": "Grace Bello",
                     "city": "Accra",
                     "country": "Ghana",
                     "status": "ACTIVE",
                 },
             ],
-        },        
+        },
         {
             "model": StaffModel,
             "records": [
@@ -109,3 +147,7 @@ def produce_data_to_insert_for_school() -> list:
             ],
         },
     ]
+
+
+
+

@@ -37,3 +37,19 @@ class UrlRouteName:
     COMPANY_DELETE_PAGE: Final[str] = "companies/<int:company_id>/delete/"
     COMPANY_DELETE_NAME: Final[str] = "company-delete"
 
+    # Constant and static Properties statiques FOR SCHOOL
+    SCHOOLS_LIST_PAGE: Final[str] = "schools/"
+    SCHOOLS_LIST_NAME: Final[str] = "schools"
+        
+    SCHOOL_CREATE_PAGE: Final[str] = "schools/create/"
+    SCHOOL_CREATE_NAME: Final[str] = "school-create"
+    
+    SCHOOL_UPDATE_PAGE: Final[str] = "schools/<int:school_id>/edit/"
+    SCHOOL_UPDATE_NAME: Final[str] = "school-update"
+    
+    #SCHOOL_MANAGE_BD_PAGE: Final[str] = "schools/<int:school_id>/manage/"
+    #SCHOOL_MANAGE_BD_NAME: Final[str] = "school-manage"
+    
+    SCHOOL_DELETE_PAGE: Final[str] = "schools/<int:school_id>/delete/"
+    SCHOOL_DELETE_NAME: Final[str] = "school-delete"
+
