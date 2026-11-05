@@ -53,20 +53,28 @@ def parse_connection_string(connection_string: str) -> dict:
 
     # SQLite
     if scheme == "sqlite":
+        print(parsed.path, 'parsed.path XXXXXXXXXXXXXXXXX DDDDDDDDDDDDD')
         path = unquote(parsed.path)
-
+        print(path, 'path XXXXXXXXXXXXXXXXX BBBBBBBBBBBBBB')
         if not path:
+            print('The SQLite database path is empty. ZZZZZZZZZZZZZZZ')
             raise ValueError("The SQLite database path is empty.")
 
         if connection_string.startswith("sqlite:////"):
+            print('Absolute Linux path. XXXXXXXXXXXXXXXXX AAAAAAAAAAAAAAAAAAAAAA')
             # Absolute Linux path.
             database_name = path[1:]
-        else:
+        elif connection_string.startswith("/"):
+            print('Relative path under the project directory. XXXXXXXXXXXXXXXXX CCCCCCCCCCCCCCCCCCC')
             # Relative path under the project directory.
             database_name = str(
                 Path(settings.BASE_DIR) / path.lstrip("/")
             )
-
+        else:
+            print(path, 'Relative path under the project directory. XXXXXXXXXXXXXXXXX ++++++')
+            # Relative path under the project directory.
+            database_name = path # str( path.lstrip("/"))      
+        print(database_name, 'database_name XXXXXXXXXXXXXXXXX')
         config.update({
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": database_name,

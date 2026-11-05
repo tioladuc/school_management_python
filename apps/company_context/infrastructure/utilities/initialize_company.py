@@ -83,7 +83,7 @@ def prepare_sample_data_for_school(connection_string: str) -> dict:
     connections.databases.pop(alias, None)
 
 
-def drop_database(connection_string: str) -> None:
+def drop_database(alias: str, connection_string: str) -> None:
     """
     Drop a database.
 
@@ -92,8 +92,7 @@ def drop_database(connection_string: str) -> None:
     connection_string:
         Database URL identifying the target database.
         """
-    alias = f"dynamic_db_{uuid4().hex}"
-    configure_database_config(connection_string, alias)
+    
 
     print("produce_tables_models_for_company_basic_table_create")
     data_company = produce_tables_models_for_company_basic_table_create()

@@ -46,25 +46,29 @@ class SchoolApplicationService:
 
     def get_all(self, db_alias="default"):
         #return self.repository.get_all(db_alias)
+        print('KKKKKKKKKKKKKKKKKKKKK ', db_alias)
         return [self.to_dto(s) for s in self.repository.get_all(db_alias)]
 
-    def get_by_id(self, academic_year_id, db_alias="default"):
-        return self.to_dto(self.repository.get_by_id(academic_year_id, db_alias))        
+    def get_by_id(self, school_id, db_alias="default"):
+        return self.to_dto(self.repository.get_by_id(school_id, db_alias))        
     
     def create(self, data, db_alias="default"):
         return self.to_dto(self.repository.create(data, db_alias))
         # return SchoolModel.objects.using(db_alias).create(**data)
     
-    def update(self, academic_year_id, data, db_alias="default"):
-        return self.to_dto(self.repository.update(academic_year_id, data, db_alias))
+    def update(self, school_id, data, db_alias="default"):
+        print('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG')
+        data = self.repository.saveBeta(school_id, data, db_alias)
+        print('JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ')
+        return self.to_dto(data)
     #        return SchoolModel.objects.using(db_alias).filter(
-    #            id=academic_year_id
+    #            id=school_id
     #        ).update(**data)
     
-    def delete(self, academic_year_id, db_alias="default"):
-        return self.repository.delete(academic_year_id, db_alias)
+    def delete(self, school_id, db_alias="default"):
+        return self.repository.delete(school_id, db_alias)
     #       return SchoolModel.objects.using(db_alias).filter(
-    #            id=academic_year_id
+    #            id=school_id
     #        ).delete()
     
 
@@ -73,7 +77,7 @@ class SchoolApplicationService:
 
 
 
-
+    """
     def create(self, command):
         company = self.companies.get(command.company_id)
         if company is None: raise NotFoundError('Company not found.')
@@ -97,7 +101,7 @@ class SchoolApplicationService:
         return self.to_dto(school)
 
     def list(self, query):
-        return [self.to_dto(s) for s in self.schools.list_by_company(query.company_id)]
+        return [self.to_dto(s) for s in self.schools.list_by_company(query.company_id)]"""
 
     @staticmethod
-    def to_dto(s): return SchoolDto(s.id, s.company_id, s.code, s.name, s.city, s.country, s.status)
+    def to_dto(s): return SchoolDto(s.id, s.code, s.name_fr, s.name_en, s.phone, s.email, s.address, s.autorization, s.founder, s.principal, s.city, s.country, s.status) #(s.id, s.code, s.name_fr, s.city, s.country, s.status)

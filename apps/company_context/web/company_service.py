@@ -18,9 +18,9 @@ def get_company_service():
         companies=repository,
     )
 
-def get_school_service(tenant_db):
-    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", tenant_db)
-    repository = SchoolRepository(connection_alias= tenant_db)
+def get_school_service(alias):
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", alias)
+    repository = SchoolRepository(connection_alias=alias)
     return SchoolApplicationService(
         schools=repository
     )

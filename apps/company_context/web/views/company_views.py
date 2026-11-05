@@ -320,12 +320,7 @@ class CompanyManageBDView(View):
     def get(self, request, company_id):
 
         service = get_company_service()
-        #service.initialize_company_bd_with_empty_basic_tables(company_id)
         
-        # print('before company creation bd+++')
-        # service.create_school_from_scratch(company_id)
-        # print('after company creation bd++++')
-
         company = service.get(GetCompanyQuery(company_id=company_id))
 
         if company is None:
@@ -344,10 +339,10 @@ class CompanyManageBDView(View):
 
         service = get_company_service()
         company = service.get(GetCompanyQuery(company_id=company_id))
-        print(request.POST.get("operation"), 'SSSSSSSSSSSSSSSSSSSSS')
+        
         operation = request.POST.get("operation")
         message = ''
-        print(operation, 'SSSSSSSSSSSSSSSSSSSSS')
+        
         if(operation == "Create DB with Basic Tables"):
             service.initialize_company_bd_with_empty_basic_tables(company_id)
             message = 'Company database created successfully.'
@@ -386,6 +381,7 @@ class CompanyManageBDView(View):
             {
                 "company": company,
                 "message": message,
+                "operation": operation,
             },
         )
         #return redirect(UrlRouteName.COMPANIES_LIST_NAME)

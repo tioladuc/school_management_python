@@ -173,11 +173,10 @@
             <div class="company-label">Action :</div>
             <div class="company-value">
               <select name="operation" id="operation" class="select-form">
-                <option value="Create DB with Basic Tables">Create DB with Basic Tables</option>
-                <option value="Create BD Tables for School">Create BD Tables for School</option>
-                <option value="Sample Data">Sample Data</option>
-                <option value="Drop Database">Drop Database</option>
-                <option value="Delete BD">Delete BD</option>
+                <option {% if operation == "Create DB with Basic Tables" %}selected{% endif %} value="Create DB with Basic Tables">Create DB with Basic Tables</option>
+                <option {% if operation == "Create BD Tables for School" %}selected{% endif %} value="Create BD Tables for School">Create BD Tables for School</option>
+                <option {% if operation == "Sample Data" %}selected{% endif %} value="Sample Data">Sample Data</option>
+                <option {% if operation == "Drop Database" %}selected{% endif %} value="Drop Database">Drop Database</option>                
               </select>
             </div>
           </div>

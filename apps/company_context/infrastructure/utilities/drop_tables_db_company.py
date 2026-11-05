@@ -54,7 +54,7 @@ def delete_database(
     print('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ', engine, connection_string)
     print(connection_string)
     print('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF')
-    print()
+    print('alias = ', alias)
     print('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF')
     if engine == "sqlite":
         _delete_sqlite_database(
@@ -187,28 +187,31 @@ def _detect_engine(connection_string: str) -> str:
 # ============================================================
 
 def _delete_sqlite_database(
-    database_config,
+    connectionString,
 ):
     print("AAAAAAAAAAAQQQQQQQQQQQQWWWWWWWWWWWWW")
-    print(database_config)
-    database_path = database_config["NAME"]
+    print(connectionString)
+    #database_path = database_config["NAME"]
 
-    print(f"Deleting SQLite database: {database_path} 444444444444444444444444444444")
-    if not database_path:
+    print(f"Deleting SQLite database: {connectionString} 444444444444444444444444444444")
+    if not connectionString:
         raise ValueError(
             "SQLite database path is missing."
         )
 
-    print(f"Deleting SQLite database: {database_path} 77777777777777777777777777777")
-    path = Path(
-        database_path
-    ).expanduser()
+    print(f"Deleting SQLite database: {connectionString} 77777777777777777777777777777")
+    connection = connectionString.replace("sqlite:///", "/")
+    #Path(
+    #    connectionString
+    #).expanduser()
 
-    print(f"Deleting SQLite database: {database_path} 888888888888888888888888888888")
+    print(f"++++++++++Deleting SQLite database: {connection} 888888888888888888888888888888")
+    path = Path(connection)
     if not path.exists():
+        print('Duclair TTTTT**********************')
         return
 
-    print(f"Deleting SQLite database: {database_path} 99999999999999999999999999999")
+    print(f"333333333333333333333Deleting SQLite database: {path} 99999999999999999999999999999")
     # Delete the actual SQLite database file.
     if path.exists():
         path.unlink()

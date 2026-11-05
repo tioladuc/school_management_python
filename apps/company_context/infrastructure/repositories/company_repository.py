@@ -150,6 +150,7 @@ class CompanyRepository:
             return True
         except CompanyModel.DoesNotExist:
             return False
+    
     ##OK
     def prepare_empty_tables_for_school(self, company_id):
         try:
@@ -163,7 +164,7 @@ class CompanyRepository:
     def drop_database(self, company_id):
         try:
             obj = CompanyModel.objects.get(pk=company_id)
-            drop_database(obj.tenant_database)
+            drop_database(obj.alias, obj.tenant_database)
             return True
         except CompanyModel.DoesNotExist:
             return False

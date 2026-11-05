@@ -7,6 +7,7 @@ from apps.company_context.application.commands.create_school import CreateSchool
 from apps.company_context.application.commands.update_school import UpdateSchoolCommand
 from apps.company_context.application.dto.school_dto import SchoolDto
 from apps.company_context.application.queries.get_school import GetSchoolQuery
+from apps.company_context.domain.entities.school import School
 
 from ..forms.school_form import SchoolForm
 from ..company_service import get_school_service
@@ -18,9 +19,10 @@ class SchoolListView(View):
     template_name = "school_context/school_list.html"
 
     def get(self, request):
-        #print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', request.tenant_db)
-        service = get_school_service(request.tenant_db)
-        db_alias = request.tenant_db
+        print('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', request.session.get("alias"))
+        db_alias = request.session.get("alias")
+        service = get_school_service(db_alias)
+        print('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW', db_alias)
         schools = service.get_all(db_alias)
 
         return render(
@@ -60,7 +62,7 @@ class SchoolCreateView(View):
                 },
             )
 
-        service = get_school_service()
+        service = get_school_service(request.session.get("alias"))
 
         try:
             service.create(CreateSchoolCommand(
@@ -102,10 +104,9 @@ class SchoolUpdateView(View):
     template_name = "school_context/school_form.html"
 
     def get(self, request, school_id):
-
-        service = get_school_service()
-        
-        school = service.get(GetSchoolQuery(school_id=school_id))
+        db_alias = request.session.get("alias")
+        service = get_school_service(db_alias)        
+        school = service.get_by_id(school_id, db_alias)
 
         if school is None:
             return redirect(UrlRouteName.SCHOOLS_LIST_NAME)
@@ -154,11 +155,12 @@ class SchoolUpdateView(View):
                 },
             )
 
-        service = get_school_service()
+        db_alias = request.session.get("alias")
+        service = get_school_service(db_alias)
 
         try:
             
-            service.update(UpdateSchoolCommand(
+            service.update(school_id, SchoolDto(
                 id=school_id,
                 code=form.cleaned_data["code"],
                 name_fr=form.cleaned_data["name_fr"],
@@ -171,8 +173,26 @@ class SchoolUpdateView(View):
                 principal=form.cleaned_data["principal"],                
                 city=form.cleaned_data["city"],
                 country=form.cleaned_data["country"],
-                status=form.cleaned_data["status"],)
+                status=form.cleaned_data["status"],),
+                db_alias
             )
+
+            """service.update(school_id, UpdateSchoolCommand(
+                            id=school_id,
+                            code=form.cleaned_data["code"],
+                            name_fr=form.cleaned_data["name_fr"],
+                            name_en=form.cleaned_data["name_en"],
+                            phone=form.cleaned_data["phone"],
+                            email=form.cleaned_data["email"],
+                            address=form.cleaned_data["address"],
+                            autorization=form.cleaned_data["autorization"],
+                            founder=form.cleaned_data["founder"],
+                            principal=form.cleaned_data["principal"],                
+                            city=form.cleaned_data["city"],
+                            country=form.cleaned_data["country"],
+                            status=form.cleaned_data["status"],),
+                            db_alias
+                        )"""
 
             messages.success(
                 request,
@@ -199,7 +219,7 @@ class SchoolDeleteView(View):
 
     def get(self, request, school_id):
 
-        service = get_school_service()
+        service = get_school_service(request.session.get("alias"))
         ##### service.initialize_company_bd_with_empty_basic_tables(company_id)
         
         # print('before company creation bd+++')
@@ -221,7 +241,7 @@ class SchoolDeleteView(View):
 
     def post(self, request, school_id):
 
-        service = get_school_service()
+        service = get_school_service(request.session.get("alias"))
 
         try:
             service.delete_school(school_id)
