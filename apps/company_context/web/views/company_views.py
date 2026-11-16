@@ -11,7 +11,7 @@ from apps.company_context.application.queries.get_company import GetCompanyQuery
 from apps.company_context.web.utilities.url_route_name import UrlRouteName
 
 from ..forms.company_form import CompanyForm
-from ..company_service import get_company_service
+from ..company_service import (get_company_service, update_company_tenant_database)
 
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -209,6 +209,8 @@ class CompanyCreateView(View):
                 tenant_database=form.cleaned_data["tenant_database"],)
             )
 
+            update_company_tenant_database(form.cleaned_data["alias"], form.cleaned_data["tenant_database"], request)
+
             messages.success(
                 request,
                 "Company created successfully.",
@@ -294,6 +296,8 @@ class CompanyUpdateView(View):
                 tenant_database=form.cleaned_data["tenant_database"],)
             )
 
+            update_company_tenant_database(form.cleaned_data["alias"], form.cleaned_data["tenant_database"], request)
+
             messages.success(
                 request,
                 "Company updated successfully.",
@@ -345,19 +349,23 @@ class CompanyManageBDView(View):
         
         if(operation == "Create DB with Basic Tables"):
             service.initialize_company_bd_with_empty_basic_tables(company_id)
+            update_company_tenant_database(company.alias, company.tenant_database, request, delete_alias=False)
             message = 'Company database created successfully.'
         elif(operation == "Create BD Tables for School"):
             #service.initialize_company_bd_with_empty_basic_tables(company_id)
             service.prepare_empty_tables_for_school(company_id)
+            update_company_tenant_database(company.alias, company.tenant_database, request, delete_alias=False)
             message = 'Company database created and initialized successfully.'
         elif(operation == "Sample Data"):
             service.prepare_sample_data_for_school(company_id)
+            update_company_tenant_database(company.alias, company.tenant_database, request, delete_alias=False)
             message = 'Company sample data inserted successfully.'
         elif(operation == 'Drop Database'):
             service.drop_database(company_id)
+            update_company_tenant_database(company.alias, company.tenant_database, request, delete_alias=True)
             message = 'Company database dropped successfully.'
         elif(operation == 'Restore Backup'):
-            #service.restore_backup(company_id)
+            update_company_tenant_database(company.alias, company.tenant_database, request, delete_alias=False)
             message = 'Company database restored successfully.'
         
         
@@ -417,7 +425,9 @@ class CompanyDeleteView(View):
         service = get_company_service()
 
         try:
-            service.delete_company(company_id)
+            company = service.get(GetCompanyQuery(company_id=company_id))
+            update_company_tenant_database(company.alias, company.tenant_database, request, delete_alias=True)
+            service.delete(GetCompanyQuery(company_id=company_id))
 
             messages.success(
                 request,

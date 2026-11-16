@@ -25,7 +25,27 @@ class CompanyRepository:
                 obj = CompanyModel.objects.get(pk=company_id)
             except CompanyModel.DoesNotExist:
                 return None
-
+    
+    def delete(self, company_id):
+        print('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM')
+        obj = CompanyModel.objects.get(pk=company_id)
+        print('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM 4444444444444444444444444444444')
+        return CompanyModel.objects.filter(
+                    id=company_id
+                ).delete()
+        try:
+            drop_database(obj.alias, obj.tenant_database)
+        except CompanyModel.DoesNotExist:
+            print('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM 222222222222222222222222')
+            return CompanyModel.objects.filter(
+                        id=company_id
+                    ).delete()
+        
+        
+        print('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM 4444444444444444444444444444444')
+        return CompanyModel.objects.filter(
+            id=company_id
+        ).delete()
             
     def get(self, company_id):
         try:

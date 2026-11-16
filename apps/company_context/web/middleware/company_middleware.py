@@ -77,10 +77,6 @@ class CompanyMiddleware:
         if company_code is None:
             company_code = request.session.get("company_code")
         
-        # print('GOGOGOG 05 = ', company_code)
-        # print(CompanyModel.objects.all())
-        # print(CompanyModel.objects.filter(code=company_code).first())
-        # print(CompanyRepository.search())
         if company_code:
             self.company = CompanyModel.objects.filter(
                     code=company_code

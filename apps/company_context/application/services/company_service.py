@@ -36,6 +36,14 @@ class CompanyApplicationService:
         if company is None: raise NotFoundError('Company not found.')
         return self.to_dto(self.companies.save(CompanySuspensionService().suspend(company)))
 
+    def delete(self, command):
+            print('FFFFFFFFFFFFFFFFFFFFFFFFFFFF', command.company_id)
+            #print('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD')
+            #company = self.companies.get(command.company_id)
+            #print('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD UUUUUUUUUUUUUU')
+            #if company is None: raise NotFoundError('Company not found.')
+            return self.companies.delete(command.company_id)
+
     def get(self, query):
         company = self.companies.get(query.company_id)
         if company is None: raise NotFoundError('Company not found.')

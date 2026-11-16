@@ -1,6 +1,6 @@
 
 
-def produce_tables_models_for_school_tocreate() -> list:
+def produce_tables_models_for_school_tocreate_todelete() -> list:
     """
     Produce a list of Django model classes to create tables for.
 
@@ -23,6 +23,192 @@ def produce_tables_models_for_school_tocreate() -> list:
         SubjectGroupModel,
         SubjectModel,
         StaffModel,
+    ]
+
+
+def produce_tables_models_for_school_tocreate() -> list:
+    """
+    Produce Django model classes in dependency order, from the
+    least dependent to the most dependent.
+
+    Returns
+    -------
+    list[type[models.Model]]
+        Ordered list of Django model classes.
+    """
+
+    from apps.company_context.infrastructure.orm.models import (
+        # School and basic entities
+        SchoolModel,
+        StaffModel,
+        StudentModule,
+        ParentModule,
+
+        # School academic structure
+        AcademicYearModel,
+        BookCategoryModel,
+        FeeCategoryModel,
+        StudentParentModule,
+
+        # Contracts and subscriptions
+        ContractModel,
+        ContractDataModel,
+        SubscriptionModel,
+
+        # Library
+        BookModel,
+
+        # Staff and academic organization
+        YearlyStaffModel,
+        ClassGroupModel,
+        TermModel,
+        SubjectGroupModel,
+        ClassRoomModel,
+        YearlyStudentModel,
+        SubjectModel,
+
+        # Library bookings
+        BookingModel,
+
+        # Fees
+        FeeLibraryModel,
+        FeeOnlineCourseModel,
+        FeeLibraryPaymentModel,
+        FeeOnlineCoursePaymentModel,
+
+        # Finance
+        FinanceCategoryModel,
+        FinanceSubCategoryModel,
+        FinanceItemModel,
+        FinanceEntryModel,
+
+        # Payroll
+        PayCategoryModel,
+        PayRecursiveItem,
+        PayStaticItem,
+        PayRecursiveItemData,
+        PayStaticItemData,
+
+        # Academic sequences and assessments
+        SequenceModel,
+        AssessmentModel,
+        ModuleYearModel,
+        ModuleTermModel,
+        ModuleSequenceModel,
+        ModuleAssessmentModel,
+
+        # Instalments and payments
+        InstalmentModel,
+        InstalmentBaseModel,
+        PaymentModel,
+        PaymentInstalmentModel,
+        MoratoryModel,
+
+        # Student discipline
+        DisciplineModel,
+        DisciplineYearModel,
+        DisciplineTermModel,
+        DisciplineSequenceModel,
+        DisciplineAssessmentModel,
+
+        # Student academic records
+        NoteModel,
+        ClassRollModel,
+        StudentMessageModel,
+        StudentMoveScanModel,
+
+        # Online courses
+        OnlineCourseModel,
+        OnlineCourseAssessmentModel,
+        OnlineCourseReadingModel,
+        OnlineCourseAssessmentAnswerModel,
+    )
+
+    return [
+        # 1. Independent entities
+        SchoolModel,
+        StaffModel,
+        StudentModule,
+        ParentModule,
+
+        # 2. Basic school entities
+        AcademicYearModel,
+        BookCategoryModel,
+        FeeCategoryModel,
+        StudentParentModule,
+
+        # 3. Contracts and subscriptions
+        # ContractModel,
+        # ContractDataModel,
+        # SubscriptionModel,
+
+        # 4. Library
+        BookModel,
+
+        # 5. Staff and academic organization
+        YearlyStaffModel,
+        ClassGroupModel,
+        TermModel,
+        SubjectGroupModel,
+        ClassRoomModel,
+        YearlyStudentModel,
+        SubjectModel,
+
+        # 6. Library bookings
+        BookingModel,
+
+        # 7. Fees
+        FeeLibraryModel,
+        FeeOnlineCourseModel,
+        FeeLibraryPaymentModel,
+        FeeOnlineCoursePaymentModel,
+
+        # 8. Finance
+        FinanceCategoryModel,
+        FinanceSubCategoryModel,
+        FinanceItemModel,
+        FinanceEntryModel,
+
+        # 9. Payroll
+        PayCategoryModel,
+        PayRecursiveItem,
+        PayStaticItem,
+        PayRecursiveItemData,
+        PayStaticItemData,
+
+        # 10. Academic sequences and assessments
+        SequenceModel,
+        AssessmentModel,
+        ModuleYearModel,
+        ModuleTermModel,
+        ModuleSequenceModel,
+        ModuleAssessmentModel,
+
+        # 11. Instalments and payments
+        InstalmentModel,
+        InstalmentBaseModel,
+        PaymentModel,
+        PaymentInstalmentModel,
+        MoratoryModel,
+
+        # 12. Student discipline
+        DisciplineModel,
+        DisciplineYearModel,
+        DisciplineTermModel,
+        DisciplineSequenceModel,
+        DisciplineAssessmentModel,
+
+        # 13. Student academic records
+        NoteModel,
+        ClassRollModel,
+        StudentMessageModel,
+        StudentMoveScanModel,
+
+        # 14. Online courses
+        OnlineCourseModel,
+        OnlineCourseAssessmentModel,
+        OnlineCourseReadingModel,
+        OnlineCourseAssessmentAnswerModel,
     ]
 
 

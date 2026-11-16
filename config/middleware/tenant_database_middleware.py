@@ -8,12 +8,10 @@ class TenantDatabaseMiddleware:
 
     def __call__(self, request):
         alias = request.session.get("alias")
-
-        print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', alias, request.session.get("company_code"), request.session.get("logged-in"))
-        
+       
         if alias:
             # The alias must already be registered in settings.DATABASES.
-            if alias not in settings.DATABASES:
+            if alias not in settings.DATABASES and request.META.get("HTTP_REFERER") and "/companies/" not in request.META.get("HTTP_REFERER"):
                 raise ImproperlyConfigured(
                     f"Unknown database alias: {alias!r}"
                 )
@@ -21,6 +19,5 @@ class TenantDatabaseMiddleware:
             request.tenant_db = alias
         else:
             request.tenant_db = "default"
-
-        # print('DUCLAIR TIOTSOP LAMBOU . . .', request.tenant_db, request.session.get("alias"))
+            
         return self.get_response(request)
