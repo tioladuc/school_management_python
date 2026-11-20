@@ -10,11 +10,11 @@ class OnlineCourseReadingDto:
     yearly_student_id: int
     reading_date: datetime
     status: str
-    created_at: datetime | None
-    updated_at: datetime | None
-    created_by_id: int
-    update_by_id: int
-    id: int | None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+    created_by_id: int | None = None
+    update_by_id: int | None = None
+    id: int | None = None
 
     @staticmethod
     def to_domain(m):

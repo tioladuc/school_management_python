@@ -12,9 +12,9 @@ class FeeCategoryDto:
     description_fr: str
     description_en: str
     status: str
-    created_at: datetime | None
-    updated_at: datetime | None
-    id: int | None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+    id: int | None = None
 
     @staticmethod
     def to_domain(m):

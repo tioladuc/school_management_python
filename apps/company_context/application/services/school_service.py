@@ -62,7 +62,7 @@ class SchoolApplicationService:
     
     def update(self, school_id, data, db_alias="default"):
         print('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG')
-        data = self.repository.save(school_id, data, db_alias)
+        data = self.repository.saveBeta(school_id, data, db_alias)
         print('JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ')
         return self.to_dto(data)
     #        return SchoolModel.objects.using(db_alias).filter(
@@ -73,7 +73,8 @@ class SchoolApplicationService:
         return self.repository.delete(school_id, db_alias)
     
     @staticmethod
-    def to_dto(s): return SchoolDto(s.id, s.code, s.name_fr, s.name_en, s.phone, s.email, s.address, s.autorization, s.founder, s.principal, s.city, s.country, s.status) #(s.id, s.code, s.name_fr, s.city, s.country, s.status)
+    def to_dto(s): return SchoolDto( s.code, s.name_fr, s.name_en, s.phone, s.email, s.address, s.autorization, s.founder, s.principal, s.city, s.country, s.status, s.created_at, s.updated_at, s.id)
+     
 
 
 """# ===========================================================================

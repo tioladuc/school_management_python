@@ -5,7 +5,7 @@ from ..infrastructure.repositories.contract_repository import ContractRepository
 from ..infrastructure.repositories.contract_data_repository import ContractDataRepository
 from ..infrastructure.events.in_memory_publisher import InMemoryEventPublisher
 from ..application.services.company_service import CompanyApplicationService
-from ..application.services.school_serviceAAA import SchoolApplicationService
+from ..application.services.school_serviceAAA import SchoolApplicationServiceAAA
 from ..application.services.staff_service import StaffApplicationService
 from ..application.services.contract_service import ContractApplicationService
 from ..application.services.contract_billing_service import ContractBillingApplicationService
@@ -17,6 +17,7 @@ def services():
     return {
       'company':CompanyApplicationService(companies,_events),
       'school':SchoolApplicationService(schools,companies,contracts,_events),
+      'schoolAAA':SchoolApplicationServiceAAA(),
       'staff':StaffApplicationService(staff,companies),
       'contract':ContractApplicationService(contracts),
       'billing':ContractBillingApplicationService(contracts,data),

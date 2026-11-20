@@ -10,7 +10,7 @@ from apps.company_context.application.queries.get_school import GetSchoolQuery
 from apps.company_context.domain.entities.school import School
 
 from ..forms.school_form import SchoolForm
-from ..company_service import get_school_service
+from ..company_service import get_school_service, get_school_serviceAAA
 from apps.company_context.web.utilities.url_route_name import UrlRouteName
 
 
@@ -23,8 +23,8 @@ class SchoolListView(View):
         db_alias = request.session.get("alias")
         service = get_school_service(db_alias)
         print('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW', db_alias)
-        schools = service.get_all(db_alias)
-
+        #schools = service.get_all(db_alias)
+        schools = get_school_serviceAAA().get_all(SchoolDto, db_alias)
         return render(
             request,
             self.template_name,
@@ -142,9 +142,9 @@ class SchoolUpdateView(View):
         )
 
     def post(self, request, school_id):
-
+        print('yoyoyoyoyoyoyoyoy')
         form = SchoolForm(request.POST)
-
+        print('yayayayayayayay', form.is_valid())
         if not form.is_valid():
             return render(
                 request,
@@ -154,13 +154,15 @@ class SchoolUpdateView(View):
                     "title": "Update School",
                 },
             )
-
+        print('yayayayayayayay 111111111', form.is_valid())
         db_alias = request.session.get("alias")
+        print('yayayayayayayay 22222222', db_alias)
         service = get_school_service(db_alias)
+        print('yayayayayayayay 33333333', form.is_valid())
 
         try:
-            
-            service.update(school_id, SchoolDto(
+            print('yayayayayayayay444444444++++', form.is_valid())
+            school_dto = SchoolDto(
                 id=school_id,
                 code=form.cleaned_data["code"],
                 name_fr=form.cleaned_data["name_fr"],
@@ -173,9 +175,13 @@ class SchoolUpdateView(View):
                 principal=form.cleaned_data["principal"],                
                 city=form.cleaned_data["city"],
                 country=form.cleaned_data["country"],
-                status=form.cleaned_data["status"],),
-                db_alias
-            )
+                status=form.cleaned_data["status"],)
+            print('WEWEWEWEWEWEWEWEWEWEWEW', form.is_valid())
+            get_school_serviceAAA().save(SchoolDto, school_dto, db_alias)
+            #service.update(school_id, school_dto,
+            #    db_alias
+            #)
+            print('yayayayayayayay5555555555555', form.is_valid())
 
             """service.update(school_id, UpdateSchoolCommand(
                             id=school_id,
@@ -193,17 +199,19 @@ class SchoolUpdateView(View):
                             status=form.cleaned_data["status"],),
                             db_alias
                         )"""
-
+            print('yayayayayayayay777777777777', form.is_valid())
             messages.success(
                 request,
                 "School updated successfully.",
             )
+            print('yayayayayayayay555555555555', form.is_valid())
 
             return redirect(UrlRouteName.SCHOOLS_LIST_NAME)
 
         except Exception as exc:
+            print('yayayayayayayayDDDDDDDDDDD', form.is_valid())
             form.add_error(None, str(exc))
-
+            print('yayayayayayayayAAAAAAAAAAAAA', form.is_valid())
             return render(
                 request,
                 self.template_name,

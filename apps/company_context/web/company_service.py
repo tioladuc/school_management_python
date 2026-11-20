@@ -6,6 +6,10 @@ from apps.company_context.application.services.company_service import (
     CompanyApplicationService,
 )
 
+from apps.company_context.application.services.school_serviceAAA import (
+    SchoolApplicationServiceAAA,
+)
+
 from apps.company_context.application.services.school_service import SchoolApplicationService
 from apps.company_context.infrastructure.repositories.company_repository import (
     CompanyRepository,
@@ -27,6 +31,9 @@ def get_school_service(alias):
     return SchoolApplicationService(
         schools=repository
     )
+
+def get_school_serviceAAA():
+    return SchoolApplicationServiceAAA()
 
 def update_company_tenant_database(alias, tenant_database, request, delete_alias=False):
     if delete_alias == False:

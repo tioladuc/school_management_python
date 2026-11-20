@@ -8,11 +8,15 @@ from apps.company_context.application import dto
 from apps.company_context.infrastructure import repositories
 
 
-class SchoolApplicationService:
+class SchoolApplicationServiceAAA:
+
+    def __init__AAA(self, events=None):
+        self.events = events
+        self.repositories = self._register_repositories()
 
     def __init__(self, events=None):
         self.events = events
-        self.repositories = self._register_repositories()
+        self.repositories = {}
 
     @staticmethod
     def _normalize_name(name):
@@ -42,7 +46,7 @@ class SchoolApplicationService:
 
                 if cls.__name__.endswith(suffix):
 
-                    key = SchoolApplicationService._normalize_name(
+                    key = SchoolApplicationServiceAAA._normalize_name(
                         cls.__name__[:-len(suffix)]
                     )
 
@@ -50,7 +54,7 @@ class SchoolApplicationService:
 
         return discovered
 
-    def _register_repositories(self):
+    def _register_repositoriesOLD(self):
 
         # Discover all DTO classes
         dto_classes = self._discover_classes(
@@ -86,7 +90,37 @@ class SchoolApplicationService:
 
         return registered
 
-    def _get_repository(self, dto):
+    def _register_repositories(self, db_alias="default"):
+
+        dto_classes = self._discover_classes(dto, "Dto")
+
+        repository_classes = self._discover_classes(
+            repositories,
+            "Repository"
+        )
+
+        registered = {}
+        missing = []
+
+        for key, dto_class in dto_classes.items():
+
+            repository_class = repository_classes.get(key)
+
+            if repository_class is None:
+                missing.append(dto_class.__name__)
+                continue
+
+            registered[dto_class] = repository_class(db_alias)
+
+        if missing:
+            raise ImportError(
+                "Missing repositories for DTOs: "
+                + ", ".join(sorted(missing))
+            )
+
+        return registered
+
+    def _get_repositoryAAA(self, dto):
 
         repository = self.repositories.get(dto)
 
@@ -97,20 +131,50 @@ class SchoolApplicationService:
 
         return repository
 
+    def _get_repository(self, dto, db_alias="default"):
+
+        if dto not in self.repositories:
+            self.repositories[dto] = self._register_single_repository(
+                dto,
+                db_alias
+            )
+
+        return self.repositories[dto]
+
+    def _register_single_repository(self, dto, db_alias):
+
+        key = self._normalize_name(
+            dto.__name__[:-3]
+        )
+
+        repository_classes = self._discover_classes(
+            repositories,
+            "Repository"
+        )
+
+        repository_class = repository_classes.get(key)
+
+        if repository_class is None:
+            raise ValueError(
+                f"No repository found for {dto.__name__}"
+            )
+
+        return repository_class(db_alias)
+
     def get_all(self, dto, db_alias="default"):
 
-        repository = self._get_repository(dto)
+        repository = self._get_repository(dto, db_alias)
 
-        entities = repository.get_all(db_alias)
+        #entities = repository.get_all(db_alias)
 
         return [
             dto.to_dto(entity)
-            for entity in entities
+            for entity in repository.get_all(db_alias)
         ]
 
     def get_by_id(self, dto, id, db_alias="default"):
 
-        repository = self._get_repository(dto)
+        repository = self._get_repository(dto, db_alias)
 
         entity = repository.get_by_id(id, db_alias)
 
@@ -121,7 +185,7 @@ class SchoolApplicationService:
 
     def save(self, dto, data, db_alias="default"):
 
-        repository = self._get_repository(dto)
+        repository = self._get_repository(dto, db_alias)
 
         # DTO -> Domain Entity
         entity = dto.to_domain(data)
@@ -138,6 +202,6 @@ class SchoolApplicationService:
 
     def delete(self, dto, id, db_alias="default"):
 
-        repository = self._get_repository(dto)
+        repository = self._get_repository(dto, db_alias)
 
         return repository.delete(id, db_alias)
