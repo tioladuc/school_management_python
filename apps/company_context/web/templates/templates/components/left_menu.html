@@ -1,4 +1,5 @@
 {% load static %}
+
 <div class="sidebar-content">
   <ul class="nav nav-secondary">
     <li class="nav-item active">
@@ -19,6 +20,33 @@
       <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
       <h4 class="text-section">Components</h4>
     </li>
+
+    <li class="nav-section">
+      <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
+      <h4 class="text-section">Components++</h4>
+    </li>
+
+    {% for menuGroup in administration_menu_group %}
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#{{menuGroup.menuGroupCode}}" class="{{ menuGroup.isCurrentGroup|yesno:',collapsed' }}">
+          <i class="fas fa-layer-group"></i>
+          <p>{{menuGroup.menuGroupName}}</p>
+          <span class="caret"></span>
+        </a>
+        <div class="collapse {{ menuGroup.isCurrentGroup|yesno:'show,' }}" id="{{menuGroup.menuGroupCode}}">
+          <ul class="nav nav-collapse">
+          {% for menu in menuGroup.menuTitles %}
+          <li>
+            <a href="/{{menuGroup.menuGroupCode}}/{{menu.menuTitleCode}}/"><span class="sub-item {{ menu.isCurrentMenu|yesno:"selectedMenu,notSelectedMenu" }}">{{menu.menuTitleName}}</span></a>
+          </li>
+          {% endfor %}
+          </ul>
+        </div>
+      </li>
+    {% endfor %}
+
+
+
     <li class="nav-item">
       <a data-bs-toggle="collapse" href="#base">
         <i class="fas fa-layer-group"></i>

@@ -1,6 +1,7 @@
 from django.urls import path
 
 from apps.company_context.web import views
+from apps.company_context.web.utilities.admin_utility import getAdministrationUtilityForUrl
 from apps.company_context.web.utilities.url_route_name import UrlRouteName
 from apps.company_context.web.views.school_views import SchoolCreateView, SchoolDeleteView, SchoolListView, SchoolUpdateView
 from .views.company_views import (
@@ -89,15 +90,22 @@ urlpatterns = [
             SchoolUpdateView.as_view(),
             name=UrlRouteName.SCHOOL_UPDATE_NAME,
         ),
-        #path(
-        #    UrlRouteName.SCHOOL_MANAGE_BD_PAGE,
-        #    SchoolManageBDView.as_view(),
-        #    name=UrlRouteName.SCHOOL_MANAGE_BD_NAME,
-        #),
+        
     
         path(
                 UrlRouteName.SCHOOL_DELETE_PAGE,
                 SchoolDeleteView.as_view(),
                 name=UrlRouteName.SCHOOL_DELETE_NAME,
             ),
+
+
+
+    *[
+        path(
+            f"{utility.menuGroupCode}/{utility.menuTitleCode}/",
+            utility.containerView.as_view(),
+            name=f"{utility.menuGroupCode}_{utility.menuTitleCode}".lower(),
+        )
+        for utility in getAdministrationUtilityForUrl()
+    ],
 ]
