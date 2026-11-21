@@ -27,7 +27,7 @@ class SchoolRepository:
 
 
 
-    def saveBeta(self, school_id, data, db_alias="default"):
+    def save(self, school_id, data, db_alias="default"):
         if school_id:
             obj = (
                 SchoolModel.objects.using(db_alias)
@@ -74,7 +74,7 @@ class SchoolRepository:
 
 
 
-    def save(self, school):
+    def saveOld(self, school):
         manager = SchoolModel.objects.using(self.connection_alias)
 
         if school.id:
