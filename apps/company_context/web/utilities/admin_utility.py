@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from django.views import View
 from apps.company_context.web import views
+from apps.company_context.web.views.administration.academic_year_views import AcademicYearView
 from apps.company_context.web.views.company_views import CompanyListView
 from apps.company_context.web.views.school_views import SchoolListView
 
@@ -24,31 +25,134 @@ class AdministrationGroupUtility:
     menuGroupName: str
 
 def getBasicAdministrationUtilities() -> list[AdministrationUtility]:
+    examCode = "exa"
+    examTitle = "Exam Admin"
+    subjectCode = "clasub"
+    subjectTitle = "Class + Subject Admin"
+    financeCode = "finan"
+    financeTitle = "Finance Admin"
+    instalmentCode = "install"
+    instalmentTitle = "Installment Admin"
+    paymentCode = "paym"
+    paymentTitle = "Payment Admin"
     return [
+        #Exam Administration
             AdministrationUtility(
-                menuGroupCode="exa",
-                menuGroupName="Exam Administration",
+                menuGroupCode=examCode,
+                menuGroupName=examTitle,
                 menuTitleCode="seq",
                 menuTitleName="Sequence Management",
                 groupProfiles=["ADMIN", "MANAGER"],
                 containerView=SchoolListView,  # Replace with your actual view class
             ),
             AdministrationUtility(
-                menuGroupCode="exa",
-                menuGroupName="Exam Administration",
+                menuGroupCode=examCode,
+                menuGroupName=examTitle,
                 menuTitleCode="term",
                 menuTitleName="Term Management",
                 groupProfiles=["ADMIN", "MANAGER"],
                 containerView=SchoolListView,  # Replace with your actual view class
             ),
             AdministrationUtility(
-                menuGroupCode="exa",
-                menuGroupName="Exam Administration",
+                menuGroupCode=examCode,
+                menuGroupName=examTitle,
                 menuTitleCode="year",
                 menuTitleName="Year Academic Management",
                 groupProfiles=["ADMIN", "MANAGER"],
+                containerView=AcademicYearView,  # Replace with your actual view class
+            ),
+        #Class + Subject Administration
+            AdministrationUtility(
+                menuGroupCode=subjectCode,
+                menuGroupName=subjectTitle,
+                menuTitleCode="classgrp",
+                menuTitleName="Class Group",
+                groupProfiles=["ADMIN", "MANAGER"],
                 containerView=CompanyListView,  # Replace with your actual view class
-            ),        
+            ),
+            AdministrationUtility(
+                menuGroupCode=subjectCode,
+                menuGroupName=subjectTitle,
+                menuTitleCode="classroom",
+                menuTitleName="Class Room",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
+            AdministrationUtility(
+                menuGroupCode=subjectCode,
+                menuGroupName=subjectTitle,
+                menuTitleCode="subgrp",
+                menuTitleName="Subject Group",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
+            AdministrationUtility(
+                menuGroupCode=subjectCode,
+                menuGroupName=subjectTitle,
+                menuTitleCode="subj",
+                menuTitleName="Subject",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
+        #Finance Administration
+            AdministrationUtility(
+                menuGroupCode=financeCode,
+                menuGroupName=financeTitle,
+                menuTitleCode="fincat",
+                menuTitleName="Finance Category",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
+            AdministrationUtility(
+                menuGroupCode=financeCode,
+                menuGroupName=financeTitle,
+                menuTitleCode="finsubcat",
+                menuTitleName="Fiance SubCategory",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
+        #Installment Administration
+            AdministrationUtility(
+                menuGroupCode=instalmentCode,
+                menuGroupName=instalmentTitle,
+                menuTitleCode="instal",
+                menuTitleName="Installment",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
+            AdministrationUtility(
+                menuGroupCode=instalmentCode,
+                menuGroupName=instalmentTitle,
+                menuTitleCode="instalbase",
+                menuTitleName="Installment Base",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
+        #Payment Administration
+            AdministrationUtility(
+                menuGroupCode=paymentCode,
+                menuGroupName=paymentTitle,
+                menuTitleCode="paycat",
+                menuTitleName="Payment Category",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
+            AdministrationUtility(
+                menuGroupCode=paymentCode,
+                menuGroupName=paymentTitle,
+                menuTitleCode="payrecuritem",
+                menuTitleName="Pay Recursive Item",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
+            AdministrationUtility(
+                menuGroupCode=paymentCode,
+                menuGroupName=paymentTitle,
+                menuTitleCode="paystaticitem",
+                menuTitleName="Pay Static Item",
+                groupProfiles=["ADMIN", "MANAGER"],
+                containerView=CompanyListView,  # Replace with your actual view class
+            ),
         ]
     
 def getAdministrationUtilityForUrl(request = None)-> list[AdministrationUtility]:
@@ -57,8 +161,7 @@ def getAdministrationUtilityForUrl(request = None)-> list[AdministrationUtility]
 
 def getAdministrationGroupUtilityForMenu(request = None)-> list[dict]:
     data = getAdministrationUtilityForUrl(request)
-    #print_request(request)
-    print(request.path, " WWWWWWWWWWWWWWWWWWWWWWWWWWWWW")
+    
     group_data = {}
     for item in data:
         if item.menuGroupCode not in group_data:

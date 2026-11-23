@@ -93,7 +93,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'apps.company_context.web.utilities.context_processors.url_routes',
-                 "apps.company_context.web.context_processors.administration_menu",
+                "apps.company_context.web.utilities.context_processors.administration_menu",
             ],
         },
     },

@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="mb-4">
+
+        <a href="{{ crud_url }}"
+           class="text-decoration-none text-muted">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Academic Years
+
+        </a>
+
+        <h2 class="fw-bold mt-3 mb-1">
+            Delete Academic Year
+        </h2>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CONFIRMATION -->
+    <!-- ================================================= -->
+
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-md-8 col-lg-6">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body p-4 p-md-5 text-center">
+
+
+                    <div class="mb-3">
+
+                        <div class="bg-danger-subtle
+                                    text-danger rounded-circle
+                                    d-inline-flex align-items-center
+                                    justify-content-center"
+                             style="width: 80px; height: 80px;">
+
+                            <i class="bi bi-trash fs-2"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <h4 class="fw-bold">
+                        Are you sure?
+                    </h4>
+
+
+                    <p class="text-muted">
+
+                        You are about to delete academic year
+
+                        <strong>
+                            {{ academic_year.year }}
+                        </strong>.
+
+                        This action cannot be undone.
+
+                    </p>
+
+
+                    <div class="alert alert-warning text-start">
+
+                        <strong>
+                            Academic Year:
+                        </strong>
+
+                        {{ academic_year.year }}
+
+                        <br>
+
+                        <strong>
+                            Start:
+                        </strong>
+
+                        {{ academic_year.start_date|date:"M d, Y" }}
+
+                        <br>
+
+                        <strong>
+                            End:
+                        </strong>
+
+                        {{ academic_year.end_date|date:"M d, Y" }}
+
+                    </div>
+
+
+                    <form method="POST"
+                          action="{{ crud_url }}">
+
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="action"
+                               value="delete">
+
+                        <input type="hidden"
+                               name="id"
+                               value="{{ academic_year.id }}">
+
+
+                        <div class="d-flex flex-column
+                                    flex-sm-row justify-content-center
+                                    gap-2 mt-4">
+
+                            <a href="{{ crud_url }}?action=detail&id={{ academic_year.id }}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+
+                            <button type="submit"
+                                    class="btn btn-danger">
+
+                                <i class="bi bi-trash me-1"></i>
+                                Yes, Delete
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
