@@ -180,6 +180,8 @@ def getAdministrationGroupUtilityForMenu(request = None)-> list[dict]:
         })
     return list(group_data.values())
 
+
+
 def print_request(request):
     print("\n========== DJANGO REQUEST ATTRIBUTES ==========")
 

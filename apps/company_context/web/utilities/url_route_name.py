@@ -53,3 +53,5 @@ class UrlRouteName:
     SCHOOL_DELETE_PAGE: Final[str] = "schools/<int:school_id>/delete/"
     SCHOOL_DELETE_NAME: Final[str] = "school-delete"
 
+
+

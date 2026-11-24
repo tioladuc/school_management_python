@@ -22,21 +22,21 @@
         <table style="width: 100%; border-collapse: collapse;">
           <thead>
             <tr>
-              <th style="text-align:left; padding:12px;">Code</th>
+              <th style="text-align:left; padding:12px; width:10%;">Code</th>
 
-              <th style="text-align:left; padding:12px;">Name</th>
+              <th style="text-align:left; padding:12px; width:20%;">Name</th>
 
-              <th style="text-align:left; padding:12px;">Email</th>
+              <th style="text-align:left; padding:12px; width:15%;">Email</th>
 
-              <th style="text-align:left; padding:12px;">Status</th>
+              <th style="text-align:left; padding:12px; width:15%;">Status</th>
 
-              <th style="text-align:left; padding:12px;">Actions</th>
+              <th style="text-align:left; padding:12px; width:40%;">Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {% for school in schools %}
-              <tr>
+              <tr class="{% if request.session.school_id|stringformat:'s' == school.id|stringformat:'s' %}tr_select{% else %}tr_noselect{% endif %}">
                 <td style="padding:12px;">{{ school.code }}</td>
 
                 <td style="padding:12px;">{{ school.name_fr }} / {{ school.name_en }}</td>
@@ -49,6 +49,17 @@
                   <a href="{% url UrlRouteName.SCHOOL_UPDATE_NAME school.id %}" class="btn btn-primary">Edit</a>
 
                   <a href="{% url UrlRouteName.SCHOOL_DELETE_NAME school.id %}" class="btn btn-danger">Delete</a>
+                  
+
+                  {% if request.session.school_id|stringformat:'s' == school.id|stringformat:'s' %}
+                    <a href="/exa/year/" class="btn btn-danger">Go To</a>
+                  {% else %}
+                    <form method="post" style="display: inline-block; margin: 0;">
+                    <input type="hidden" name="school_id" value="{{ school.id }}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Select</button>
+                  </form>
+                  {% endif %}
                 </td>
               </tr>
             {% endfor %}

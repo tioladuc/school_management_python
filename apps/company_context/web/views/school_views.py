@@ -28,6 +28,18 @@ class SchoolListView(View):
                 "schools": schools,
             },
         )
+    
+    def post(self, request):
+            db_alias = request.session.get("alias")            
+            request.session["school_id"] = request.POST['school_id']
+            schools = get_school_service().get_all(SchoolDto, db_alias)
+            return render(
+                request,
+                self.template_name,
+                {
+                    "schools": schools,
+                },
+            )
 
 class SchoolCreateView(View):
 

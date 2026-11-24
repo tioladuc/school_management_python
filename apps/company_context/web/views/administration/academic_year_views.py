@@ -32,10 +32,12 @@ class AcademicYearView(View):
     # ---------------------------------------------------------
     # URL helper
     # ---------------------------------------------------------
+    myRequest = None
 
     def get_url(self, action="list", academic_year_id=None):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 01')
-        url = reverse("academic_year_crud")
+        #url = reverse("academic_year_crud")
+        url = self.myRequest.path
 
         params = f"?action={action}"
 
@@ -50,6 +52,7 @@ class AcademicYearView(View):
 
     def get_context_data(self, request):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 02')
+        self.myRequest = request
         db_alias = request.session.get("alias")
         school_id = request.session.get("school_id")#DUCLAIRTIOTSOP
 
@@ -92,6 +95,7 @@ class AcademicYearView(View):
 
     def get(self, request, *args, **kwargs):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 04')
+        self.myRequest = request
         action = request.GET.get("action", "list")
 
         context_data = self.get_context_data(request)
@@ -128,6 +132,7 @@ class AcademicYearView(View):
 
     def post(self, request, *args, **kwargs):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 05')
+        self.myRequest = request
         action = request.POST.get("action", "list")
 
         context_data = self.get_context_data(request)
@@ -158,26 +163,27 @@ class AcademicYearView(View):
 
     def list(self, request, db_alias, school_id):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 06')
+        self.myRequest = request
         academic_years = (
             get_school_service()
             .get_all(AcademicYearDto, db_alias)
         )
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 061')
         # Filter by school
         academic_years = [
             academic_year
             for academic_year in academic_years
             if academic_year.school_id == school_id
         ]
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 062')
         # -----------------------------------------------------
         # Search
         # -----------------------------------------------------
 
         search = request.GET.get("search", "").strip()
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 063')
         if search:
-
+            print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 063')
             academic_years = [
                 academic_year
                 for academic_year in academic_years
@@ -187,11 +193,11 @@ class AcademicYearView(View):
         # -----------------------------------------------------
         # Filter by status
         # -----------------------------------------------------
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 064')
         status = request.GET.get("status", "").strip()
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 065')
         if status:
-
+            print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 066')
             academic_years = [
                 academic_year
                 for academic_year in academic_years
@@ -201,10 +207,10 @@ class AcademicYearView(View):
         # -----------------------------------------------------
         # Filter by year range
         # -----------------------------------------------------
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 067')
         year_from = request.GET.get("year_from", "").strip()
         year_to = request.GET.get("year_to", "").strip()
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 068')
         if year_from:
 
             try:
@@ -218,7 +224,7 @@ class AcademicYearView(View):
 
             except ValueError:
                 year_from = ""
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 069')
         if year_to:
 
             try:
@@ -236,7 +242,7 @@ class AcademicYearView(View):
         # -----------------------------------------------------
         # Sort
         # -----------------------------------------------------
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 0610')
         academic_years = sorted(
             academic_years,
             key=lambda x: x.year,
@@ -252,7 +258,7 @@ class AcademicYearView(View):
         page_number = request.GET.get("page")
 
         page_obj = paginator.get_page(page_number)
-
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 0611')
         context = {
             "academic_years": page_obj,
             "page_obj": page_obj,
@@ -285,6 +291,7 @@ class AcademicYearView(View):
 
     def create(self, request):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 07')
+        self.myRequest = request
         form = AcademicYearForm()
 
         return render(
@@ -300,6 +307,7 @@ class AcademicYearView(View):
 
     def create_post(self, request, db_alias, school_id):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 08')
+        self.myRequest = request
         form = AcademicYearForm(request.POST)
 
         if not form.is_valid():
@@ -360,6 +368,7 @@ class AcademicYearView(View):
     def detail(self, request, db_alias, school_id):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 09')
         academic_year_id = request.GET.get("id")
+        self.myRequest = request
 
         if not academic_year_id:
 
@@ -403,6 +412,7 @@ class AcademicYearView(View):
     def update(self, request, db_alias, school_id):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 10')
         academic_year_id = request.GET.get("id")
+        self.myRequest = request
 
         if not academic_year_id:
 
@@ -446,6 +456,7 @@ class AcademicYearView(View):
     def update_post(self, request, db_alias, school_id):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 11')
         academic_year_id = request.POST.get("id")
+        self.myRequest = request
 
         if not academic_year_id:
 
@@ -535,6 +546,7 @@ class AcademicYearView(View):
     def delete(self, request, db_alias, school_id):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 12')
         academic_year_id = request.GET.get("id")
+        self.myRequest = request
 
         if not academic_year_id:
 
@@ -565,6 +577,7 @@ class AcademicYearView(View):
 
     def delete_post(self, request, db_alias, school_id):
         print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 13')
+        self.myRequest = request
         academic_year_id = request.POST.get("id")
 
         if not academic_year_id:
