@@ -26,6 +26,7 @@ class SchoolListView(View):
             self.template_name,
             {
                 "schools": schools,
+                "go_academic_year": "/exa/year/",
             },
         )
     
@@ -38,6 +39,7 @@ class SchoolListView(View):
                 self.template_name,
                 {
                     "schools": schools,
+                    "go_academic_year": "/exa/year/",
                 },
             )
 

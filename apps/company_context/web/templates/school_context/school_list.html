@@ -52,7 +52,7 @@
                   
 
                   {% if request.session.school_id|stringformat:'s' == school.id|stringformat:'s' %}
-                    <a href="/exa/year/" class="btn btn-danger">Go To</a>
+                    <a href="{{go_academic_year}}" class="btn btn-danger">Go To</a>
                   {% else %}
                     <form method="post" style="display: inline-block; margin: 0;">
                     <input type="hidden" name="school_id" value="{{ school.id }}">

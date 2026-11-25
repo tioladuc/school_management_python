@@ -276,9 +276,10 @@ class AcademicYearView(View):
                 if academic_year.status == "INACTIVE"
             ),
             "create_url": self.get_url("create"),
-            "crud_url": self.get_url("list"),
-        }
+            "crud_url": self.myRequest.path, #self.get_url("list"),
 
+        }
+        print('SSSSSSSSSSSSSSSSSSSS PPPPPPPP 0612')
         return render(
             request,
             self.list_template_name,
