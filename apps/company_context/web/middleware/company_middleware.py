@@ -30,18 +30,21 @@ class CompanyMiddleware:
 
 
     def __call__(self, request): 
-        company_exists = self.check_company_existence(request)
+        #company_exists = self.check_company_existence(request)
         print("===============TIOTSOP 01===============", request.path)
         # As we login from an outside website
         if request.path == "/":
             print("===============TIOTSOP 02===============", request.path)
+            company_exists = self.check_company_existence(request)
             if company_exists:
                 print("===============TIOTSOP 03===============", request.path)
                 return redirect(UrlRouteName.LOGIN_NAME)
             else:
                 print("===============TIOTSOP 04===============", request.path)
                 return redirect(UrlRouteName.ERROR_NAME)
-        print("===============TIOTSOP 05===============", request.path)
+        company_exists = "alias" in request.session
+        print("===============TIOTSOP 05===============", request.path, company_exists)
+        
         if request.path.startswith(tuple(self.EXCLUDED_PATHS_MUST_HAVE_COMPANY)) and not company_exists:
             print("===============TIOTSOP 06===============", request.path)
             return redirect(UrlRouteName.ERROR_NAME)
@@ -54,7 +57,7 @@ class CompanyMiddleware:
 
         # Authenticated user
         print("===============TIOTSOP 09===============", request.path)
-        if request.session["logged-in"]: #request.user.is_authenticated:
+        if "logged-in" in request.session and request.session["logged-in"]: #request.user.is_authenticated:
             print("===============TIOTSOP 10===============", request.path)
             return self.get_response(request)
 
@@ -88,6 +91,7 @@ class CompanyMiddleware:
 
     def check_company_existence(self, request): 
         company_code = request.POST.get("company_code")
+        print("here isthe code=", company_code, request.POST)
         if company_code is None:
             company_code = request.session.get("company_code")
         
@@ -95,6 +99,7 @@ class CompanyMiddleware:
             self.company = CompanyModel.objects.filter(
                     code=company_code
             ).first()
+            request.session["alias"] = self.company.alias
             return True
         
         else:

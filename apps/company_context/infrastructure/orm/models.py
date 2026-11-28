@@ -8,7 +8,7 @@ from .contract_data_model import ContractDataModel
 from .subscription_model import SubscriptionModel
 
 from .parent_model import ParentModule
-from .student_module import StudentModule
+from .student_model import StudentModule
 from .student_parent_module import StudentParentModule
 from .academic_year_model import AcademicYearModel
 from .class_group_model import ClassGroupModel

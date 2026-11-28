@@ -16,6 +16,7 @@ class StudentMapper:
             born_at=m.born_at,
             born_on=m.born_on,
             gender=m.gender,
+            password = m.password,
             status=m.status,
             created_at=m.created_at,
             updated_at=m.updated_at,
@@ -24,7 +25,7 @@ class StudentMapper:
     @staticmethod
     def to_model(e, m=None):
         if m is None:
-            from ...infrastructure.orm.student_module import StudentModule
+            from ..orm.student_model import StudentModule
             m = StudentModule()
 
         m.code = e.code
@@ -36,6 +37,7 @@ class StudentMapper:
         m.born_at = e.born_at
         m.born_on = e.born_on
         m.gender = e.gender
+        m.password = e.password,
         m.status = e.status
 
         return m

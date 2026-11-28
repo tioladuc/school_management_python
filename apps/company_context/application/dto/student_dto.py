@@ -15,6 +15,7 @@ class StudentDto:
     born_at: str
     born_on: date
     gender: str
+    password: str
     status: str
     created_at: datetime | None = None
     updated_at: datetime | None = None
@@ -32,6 +33,7 @@ class StudentDto:
             born_at=m.born_at,
             born_on=m.born_on,
             gender=m.gender,
+            password=m.password,
             status=m.status,
             created_at=m.created_at,
             updated_at=m.updated_at,
@@ -50,6 +52,7 @@ class StudentDto:
             born_at=m.born_at,
             born_on=m.born_on,
             gender=m.gender,
+            password=m.password,
             status=m.status,
             created_at=m.created_at,
             updated_at=m.updated_at,

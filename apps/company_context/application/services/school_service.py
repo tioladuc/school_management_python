@@ -121,6 +121,18 @@ class SchoolApplicationService:
             for entity in repository.get_all(db_alias)
         ]
 
+    def get_search(self, dto, search: dict, db_alias="default"):
+    
+        repository = self._get_repository(dto, db_alias)
+    
+        #entities = repository.get_all(db_alias)
+    
+        return [
+            dto.to_dto(entity)
+            for entity in repository.get_search(search, db_alias)
+        ]
+    
+
     def get_by_id(self, dto, id, db_alias="default"):
 
         repository = self._get_repository(dto, db_alias)

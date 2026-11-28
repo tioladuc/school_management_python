@@ -12,6 +12,7 @@ class Student:
     born_at: str
     born_on: date
     gender: str = 'MALE'
+    password: str = ''
     status: str = 'ACTIVE'
     created_at: datetime | None = None
     updated_at: datetime | None = None

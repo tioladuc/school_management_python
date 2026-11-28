@@ -1,5 +1,5 @@
 from django.db import models
-from .student_module import StudentModule
+from .student_model import StudentModule
 from .parent_model import ParentModule
 
 class StudentParentModule(models.Model):

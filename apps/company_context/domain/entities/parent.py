@@ -11,6 +11,7 @@ class Parent:
     profession: str
     gender: str = 'MALE'
     status: str = 'ACTIVE'
+    password: str = ''
     created_at: datetime | None = None
     updated_at: datetime | None = None
     id: int | None = None

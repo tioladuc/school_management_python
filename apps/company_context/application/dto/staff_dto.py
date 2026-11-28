@@ -12,6 +12,7 @@ class StaffDto:
     email: str
     phone: str
     position: str
+    password: str
     status: str
     created_at: datetime | None = None
     updated_at: datetime | None = None
@@ -26,6 +27,7 @@ class StaffDto:
             email=m.email,
             phone=m.phone,
             position=m.position,
+            password=m.password,
             status=m.status,
             created_at=m.created_at,
             updated_at=m.updated_at,
@@ -41,6 +43,7 @@ class StaffDto:
             email=m.email,
             phone=m.phone,
             position=m.position,
+            password=m.password,
             status=m.status,
             created_at=m.created_at,
             updated_at=m.updated_at,

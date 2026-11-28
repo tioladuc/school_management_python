@@ -13,6 +13,7 @@ class ParentDto:
     phone: str
     profession: str
     gender: str
+    password: str
     status: str
     created_at: datetime | None = None
     updated_at: datetime | None = None
@@ -28,6 +29,7 @@ class ParentDto:
             phone=m.phone,
             profession=m.profession,
             gender=m.gender,
+            password=m.password,
             status=m.status,
             created_at=m.created_at,
             updated_at=m.updated_at,
@@ -44,6 +46,7 @@ class ParentDto:
             phone=m.phone,
             profession=m.profession,
             gender=m.gender,
+            password=m.password,
             status=m.status,
             created_at=m.created_at,
             updated_at=m.updated_at,

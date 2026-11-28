@@ -1,6 +1,37 @@
 from ...domain.entities.staff import Staff
+
+
 class StaffMapper:
+
     @staticmethod
-    def to_domain(m): return Staff(m.id,m.staff_number,m.first_name,m.last_name,m.email,m.phone,m.position,m.status,m.created_at,m.updated_at)
+    def to_domain(m):
+        return Staff(
+            id=m.id,
+            staff_number=m.staff_number,
+            first_name=m.first_name,
+            last_name=m.last_name,
+            email=m.email,
+            phone=m.phone,
+            position=m.position,
+            password = m.password,
+            status=m.status,
+            created_at=m.created_at,
+            updated_at=m.updated_at,
+        )
+
     @staticmethod
-    def to_model(e,m): m.staff_number=e.staff_number;m.first_name=e.first_name;m.last_name=e.last_name;m.email=e.email;m.phone=e.phone;m.position=e.position;m.status=e.status;return m
+    def to_model(e, m=None):
+        if m is None:
+            from ..orm.staff_model import StaffModel
+            m = StaffModel()
+
+        m.staff_number = e.staff_number
+        m.first_name = e.first_name
+        m.last_name = e.last_name
+        m.email = e.email
+        m.phone = e.phone
+        m.position = e.position
+        m.password = e.password,
+        m.status = e.status
+
+        return m

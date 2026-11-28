@@ -13,6 +13,7 @@ class StudentModule(models.Model):
     born_at=models.CharField(max_length=150)
     born_on=models.DateField()
     gender=models.CharField(max_length=20, choices=GENDER_CHOICES, default='MALE')
+    password=models.CharField(max_length=80)
     
     status=models.CharField(max_length=20, choices=STATUS_CHOICES, default='ACTIVE')
     created_at=models.DateTimeField(auto_now_add=True)

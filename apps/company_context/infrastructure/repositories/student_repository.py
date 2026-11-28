@@ -1,6 +1,6 @@
 """Repository for StudentModule."""
 
-from ..orm.student_module import StudentModule
+from ..orm.student_model import StudentModule
 from ..mappers.student_mapper import StudentMapper
 
 

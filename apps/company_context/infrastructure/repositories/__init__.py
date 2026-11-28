@@ -65,7 +65,7 @@ __all__ = [
     "ClassGroupRepository",
     "ClassRollRepository",
     "ClassRoomRepository",
-    "ContractDataRepository",
+    "ContractDataRepository",#++
     "DisciplineAssessmentRepository",
     "DisciplineRepository",
     "DisciplineSequenceRepository",

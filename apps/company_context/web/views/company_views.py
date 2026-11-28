@@ -5,13 +5,14 @@ from django.views import View
 
 from apps.company_context.application.commands.create_company import CreateCompanyCommand
 from apps.company_context.application.commands.update_company import UpdateCompanyCommand
+from apps.company_context.application.dto.school_dto import SchoolDto
 from apps.company_context.application.dto.user_in_dto import UserInDto
 from apps.company_context.application.queries.search_company import SearchCompanyQuery
 from apps.company_context.application.queries.get_company import GetCompanyQuery
 from apps.company_context.web.utilities.url_route_name import UrlRouteName
 
 from ..forms.company_form import CompanyForm
-from ..company_service import (get_company_service, update_company_tenant_database)
+from ..company_service import (get_company_service, get_school_service, update_company_tenant_database)
 
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -43,11 +44,14 @@ class CompanyLoginView(View):
 
     def get(self, request):
         service = get_company_service()
+        db_alias = request.session.get("alias")
+        print("bingo we got the alias ???????????????????????????", db_alias)
+        #schools = get_school_service().get_all(SchoolDto, request.session.get("alias"))
         return render(
             request,
             self.template_name_login,
             {
-                "schools": service.getSchools(),
+                "schools": get_school_service().get_all(SchoolDto, request.session.get("alias")), #service.getSchools(), 
                 "profiles": service.getProfiles(),
             },
         )
@@ -63,35 +67,36 @@ class CompanyLoginView(View):
         service = get_company_service()
 
         # 3. Send the data to the application layer
-        userInDto = UserInDto(
+        est_valid = service.loginBeta(self, request, request.session.get("alias"), school_id, profile, username, password)
+        """userInDto = UserInDto(
             company_code=request.session.get("company_code"),
             school_id=school_id,
             profile=profile,
             username=username,
             password=password,
         )
-        result = service.login(userInDto)
+        result = service.login(userInDto)"""
         
         # 4. Handle the result
-        if not result.success:
+        if not est_valid: #result.success:
             return render(
                 request,
                 self.template_name_login,
                 {
-                    "schools": service.getSchools(),
+                    "schools": get_school_service().get_all(SchoolDto, request.session.get("alias")), #service.getSchools(),
                     "profiles": service.getProfiles(),
-                    "error": result.message,
+                    "error": request.session.get("message"), #result.message,
                 },
             )
         
         # 5. Login successful
-        request.session["school_id"] = school_id
+        """request.session["school_id"] = school_id
         request.session["profile"] = profile
         request.session["user_data"] = result.user_data
         request.session["alias"] = result.alias
         request.session["logged-in"] = True
         print(request.session)
-        print("duclair tiotsop lambou et toi toi toi toi")
+        print("duclair tiotsop lambou et toi toi toi toi")"""
 
         return redirect(UrlRouteName.COMPANIES_LIST_NAME)#(self.template_name_home)
 
@@ -105,7 +110,7 @@ class CompanyPasswordResetView(View):
             request,
             self.template_name,
             {
-                "schools": service.getSchools(),
+                "schools": get_school_service().get_all(SchoolDto, request.session.get("alias")), #service.getSchools(),
                 "profiles": service.getProfiles(),
             },
         )
@@ -116,7 +121,7 @@ class CompanyPasswordResetView(View):
             request,
             self.template_name,
             {
-                "schools": service.getSchools(),
+                "schools": get_school_service().get_all(SchoolDto, request.session.get("alias")), #service.getSchools(),
                 "profiles": service.getProfiles(),
             },
         )
@@ -132,7 +137,7 @@ class CompanyCreateAccountView(View):
             request,
             self.template_name,
             {
-                "schools": service.getSchools(),
+                "schools": get_school_service().get_all(SchoolDto, request.session.get("alias")), #service.getSchools(),
                 "profiles": service.getProfiles(),
             },
         )
@@ -144,7 +149,7 @@ class CompanyCreateAccountView(View):
             request,
             self.template_name,
             {
-                "schools": service.getSchools(),
+                "schools": get_school_service().get_all(SchoolDto, request.session.get("alias")), #service.getSchools(),
                 "profiles": service.getProfiles(),
             },
         )

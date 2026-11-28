@@ -1,9 +1,8 @@
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass
+from datetime import datetime
 
-@dataclass
+@dataclass(kw_only=True)
 class School:
-    id: int | None
     code: str
     name_fr: str
     name_en: str
@@ -15,16 +14,9 @@ class School:
     principal: str
     city: str
     country: str
-    status: str = "ACTIVE"
+    status: str = 'ACTIVE'
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+    id: int | None = None
 
-    created_at: datetime = field(
-        default_factory=lambda: datetime.now(timezone.utc)
-    )
-
-    updated_at: datetime = field(
-        default_factory=lambda: datetime.now(timezone.utc)
-    )
-
-    @property
-    def is_active(self):
-        return self.status == "ACTIVE"
+__all__ = ["School"]

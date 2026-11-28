@@ -1,3 +1,6 @@
+from apps.company_context.application.dto.parent_dto import ParentDto
+from apps.company_context.application.services.school_service import SchoolApplicationService
+
 from ...domain.entities.company import Company
 from ...domain.value_objects.company_code import CompanyCode
 from ...domain.services.company_domain_service import CompanyDomainService
@@ -8,6 +11,11 @@ from ..dto.company_dto import CompanyDto
 from types import SimpleNamespace
 
 class CompanyApplicationService:
+    STAFF = 'STAFF'
+    STUDENT = 'STUDENT'
+    PARENT = 'PARENT'
+    SUPERADMIN = 'SUPERADMIN'
+
     def __init__(self, companies, events=None):
         self.companies = companies
         self.events = events
@@ -54,23 +62,27 @@ class CompanyApplicationService:
     
     def getProfiles(self):
         return [
-            {'value': 'SUPER_ADMINISTRATOR', 'label': 'Super Administrator'},
-            {'value': 'ADMINISTRATOR', 'label': 'Administrator'},
-            {'value': 'ADMINISTRATION', 'label': 'Administration'},
-            {'value': 'STUDENT', 'label': 'Student'},
-            {'value': 'PARENT', 'label': 'Parent'},
+            {'value': self.STAFF, 'label': 'Staff / Personnel'},
+            {'value': self.STUDENT, 'label': 'Student / Eleve'},
+            {'value': self.PARENT, 'label': 'Parent'},
+            {'value': self.SUPERADMIN, 'label': 'Super-Administrator'}
+        ]
+    def getStaffProfiles(self):
+        return [
             {'value': 'TEACHER', 'label': 'Teacher'},
-            {'value': 'ACCOUNTANT', 'label': 'Accountant'}
+            {'value': 'ACCOUNTANT', 'label': 'Accountant'},
+            {'value': 'HEADMASTER', 'label': 'Head Master'},
+            {'value': 'ASSISTANT', 'label': 'Administrative Assistant'}
         ]
 
-    def getSchools(self):
+    """def getSchools(self):
         return [
             {"value": "SCH_FDL_001", "label": "Collège François-de-Laval"},
             {"value": "SCH_STP_002", "label": "St-Patrick's High School"},
             {"value": "SCH_URS_003", "label": "École des Ursulines de Québec"},
             {"value": "SCH_STR_004", "label": "École Secondaire Saint-Roch"},
             {"value": "SCH_GAR_005", "label": "Collège Garneau"}
-        ]
+        ]"""
 
     def login(self, userInDto):
         print(userInDto.company_code , "========666666666666666")
@@ -86,6 +98,40 @@ class CompanyApplicationService:
         return SimpleNamespace(**data)
         return {"success": True, "message": "Login successful.", "user_data": None}
 
+    def loginBeta(self, request, alias, school_id, profile_key, login, password):
+        resultProfile = next((item for item in self.getProfiles() if item["value"] == profile_key), None)
+
+        if resultProfile is None:
+            return False
+        
+        if resultProfile['value'] == self.PARENT:
+            return self._loginParent(request, alias, school_id, resultProfile, login, password)
+        
+        if resultProfile['value'] == self.STAFF:
+            return self._loginStaff(request, alias, school_id, resultProfile, login, password)
+        
+        if resultProfile['value'] == self.STUDENT:
+            return self._loginStudent(request, alias, school_id, resultProfile, login, password)
+        
+        if resultProfile['value'] == self.SUPERADMIN:
+            return self._loginSuperadmin(request, alias, school_id, resultProfile, login, password)
+                
+        return True
+
+    def _loginParent(self, request, alias, school_id, resultProfile, login, password):
+        service = SchoolApplicationService()
+        service.get_all(ParentDto, alias)
+
+        return True    
+
+    def _loginStaff(self, request, alias, school_id, resultProfile, login, password):
+        return True
+
+    def _loginStudent(self, request, alias, school_id, resultProfile, login, password):
+        return True
+
+    def _loginSuperadmin(self, request, alias, school_id, resultProfile, login, password):
+        return True
 
     # For company database initialization and school creation
     def initialize_company_bd_with_empty_basic_tables(self, company_id):

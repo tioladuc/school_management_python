@@ -9,6 +9,7 @@ class StaffModel(models.Model):
     email=models.EmailField()
     phone=models.CharField(max_length=50,blank=True)
     position=models.CharField(max_length=150,blank=True)
+    password=models.CharField(max_length=80)
     
     status=models.CharField(max_length=20, choices=STATUS_CHOICES, default='ACTIVE')
     created_at=models.DateTimeField(auto_now_add=True)

@@ -1,15 +1,18 @@
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass
+from datetime import datetime
 
-@dataclass
+@dataclass(kw_only=True)
 class Staff:
-    id: int | None
     staff_number: str
     first_name: str
     last_name: str
     email: str
     phone: str = ''
     position: str = ''
+    password: str = ''
     status: str = 'ACTIVE'
-    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+    id: int | None = None
+
+__all__ = ["Staff"]

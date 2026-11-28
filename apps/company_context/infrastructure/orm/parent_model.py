@@ -11,6 +11,7 @@ class ParentModule(models.Model):
     phone=models.CharField(max_length=150)
     profession=models.CharField(max_length=150)
     gender=models.CharField(max_length=20, choices=GENDER_CHOICES, default='MALE')
+    password=models.CharField(max_length=80)
 
     status=models.CharField(max_length=20, choices=STATUS_CHOICES, default='ACTIVE')
     created_at=models.DateTimeField(auto_now_add=True)

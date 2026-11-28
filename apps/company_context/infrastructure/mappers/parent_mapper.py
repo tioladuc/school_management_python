@@ -14,6 +14,7 @@ class ParentMapper:
             phone=m.phone,
             profession=m.profession,
             gender=m.gender,
+            password = m.password,
             status=m.status,
             created_at=m.created_at,
             updated_at=m.updated_at,
@@ -32,6 +33,7 @@ class ParentMapper:
         m.phone = e.phone
         m.profession = e.profession
         m.gender = e.gender
+        m.password = e.password,
         m.status = e.status
 
         return m

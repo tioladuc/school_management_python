@@ -296,7 +296,7 @@
         <option value="">-- Select a school --</option>
         {% block select_schools %}
           {% for school in schools %}
-            <option value="{{ school.value }}">{{ school.label }}</option>
+            <option value="{{ school.id }}">{{ school.name_fr }} / {{ school.name_en }}</option>
           {% empty %}
             <option value="">No school available</option>
           {% endfor %}

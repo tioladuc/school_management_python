@@ -1,6 +1,6 @@
 from django.db import models
 from .academic_year_model import AcademicYearModel
-from .student_module import StudentModule
+from .student_model import StudentModule
 from .class_room_model import ClassRoomModel
 
 class YearlyStudentModel(models.Model):
